@@ -1,0 +1,236 @@
+/* ─── Backdrop & Overlay ─────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── Modal Card ─────────────────────────────────────────── */
+.modalCard {
+  background: white;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.2s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(12px) scale(0.98); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* ─── Modal Header ───────────────────────────────────────── */
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px 24px;
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0F172A;
+  letter-spacing: -0.3px;
+}
+
+.btnClose {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnClose:hover {
+  background: #F1F5F9;
+  color: #0F172A;
+}
+
+/* ─── Modal Content & Dropzone ────────────────────────────── */
+.modalBody {
+  padding: 0 24px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dropzone {
+  border: 2px dashed #CBD5E1;
+  border-radius: 14px;
+  padding: 36px 20px;
+  text-align: center;
+  background: #FAFAFA;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+.dropzone:hover, .dropzoneActive {
+  border-color: var(--brand-orange, #E8692A);
+  background: #FFF6F3;
+}
+
+.iconBadge {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #FFF0E8;
+  color: var(--brand-orange, #E8692A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.dropzone:hover .iconBadge {
+  transform: translateY(-2px);
+}
+
+.textGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.primaryText {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--brand-orange, #E8692A);
+}
+
+.subText {
+  font-size: 13px;
+  color: #64748B;
+  font-weight: 400;
+}
+
+.fileInput {
+  display: none;
+}
+
+/* Selected File Box */
+.selectedFileBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  width: 100%;
+}
+
+.fileInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fileName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.fileSize {
+  font-size: 11.5px;
+  color: #64748B;
+}
+
+.btnRemoveFile {
+  background: none;
+  border: none;
+  color: #EF4444;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Modal Footer ───────────────────────────────────────── */
+.modalFooter {
+  padding: 16px 24px;
+  border-top: 1px solid #F1F5F9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footerLinkOrange {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--brand-orange, #E8692A);
+  text-decoration: underline;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.15s;
+}
+
+.footerLinkOrange:hover {
+  opacity: 0.8;
+}
+
+.footerLinkBlue {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2563EB;
+  text-decoration: underline;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.15s;
+}
+
+.footerLinkBlue:hover {
+  opacity: 0.8;
+}
+
+.btnUploadSubmit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  background: var(--brand-orange, #E8692A);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btnUploadSubmit:hover {
+  background: #D95A1B;
+}

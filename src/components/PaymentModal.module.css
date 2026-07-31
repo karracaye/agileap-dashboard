@@ -1,0 +1,543 @@
+/* ─── Modal Backdrop ─────────────────────────────────────── */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 30px 20px;
+  overflow-y: auto;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── Modal Dialog Container ─────────────────────────────── */
+.dialog {
+  background: #FFFFFF;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 1080px;
+  max-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(226, 232, 240, 0.8);
+  animation: popUp 0.22s ease;
+  overflow: hidden;
+  margin: auto 0;
+}
+
+@keyframes popUp {
+  from { opacity: 0; transform: scale(0.97) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ─── Header ────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.headerTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerIconSlot {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #FFF0E8;
+  color: var(--brand-orange, #E8692A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1A202C;
+  letter-spacing: -0.2px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btnMakePayment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: 1.5px solid var(--brand-orange, #E8692A);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-orange, #E8692A);
+  background: white;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnMakePayment:hover {
+  background: #FFF6F3;
+}
+
+.btnClose {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: 1.5px solid #CBD5E0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4A5568;
+  background: white;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnClose:hover {
+  border-color: #718096;
+  color: #1A202C;
+  background: #F7FAFC;
+}
+
+/* ─── Scrollable Modal Body ──────────────────────────────── */
+.body {
+  padding: 20px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.body::-webkit-scrollbar {
+  width: 6px;
+}
+.body::-webkit-scrollbar-track {
+  background: #F8F9FB;
+}
+.body::-webkit-scrollbar-thumb {
+  background: #CBD5E0;
+  border-radius: 99px;
+}
+
+/* ─── Collapsible Section ────────────────────────────────── */
+.section {
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+  flex-shrink: 0;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: #F8F9FB;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.sectionTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sectionIcon {
+  color: var(--brand-orange, #E8692A);
+  display: flex;
+  align-items: center;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2D3748;
+}
+
+.itemBadge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #E8692A;
+  background: #FFE8DC;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.chevron {
+  color: #718096;
+  transition: transform 0.2s ease;
+}
+
+.chevronCollapsed {
+  transform: rotate(180deg);
+}
+
+.sectionBody {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ─── Form Fields ────────────────────────────────────────── */
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 24px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #4A5568;
+}
+
+.reqStar {
+  color: #E8692A;
+  margin-left: 2px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 11px;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #1A202C;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s;
+  background: white;
+}
+
+.input:focus {
+  border-color: var(--brand-orange, #E8692A);
+}
+
+.select {
+  width: 100%;
+  padding: 8px 11px;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #1A202C;
+  outline: none;
+  background: white;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.currencyPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: #F0F4F8;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #2D3748;
+  width: fit-content;
+}
+
+.subHint {
+  font-size: 11px;
+  color: #A0AEC0;
+  margin-top: 2px;
+}
+
+/* ─── Dropdown Item Card Layout (Full Mode) ──────────────── */
+.itemCardsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.itemCard {
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  background: white;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.itemCard:hover {
+  border-color: #CBD5E0;
+}
+
+.itemCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #F8F9FB;
+  cursor: pointer;
+  user-select: none;
+  gap: 12px;
+}
+
+.itemHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.removeBtn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #E53E3E;
+  background: #FFF5F5;
+  border: 1px solid #FED7D7;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.removeBtn:hover {
+  background: #E53E3E;
+  color: white;
+}
+
+.itemTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.itemTypeTag {
+  font-size: 11px;
+  font-weight: 600;
+  color: #4A5568;
+  background: #EDF2F7;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.itemRefNo {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1A202C;
+}
+
+.itemPayee {
+  font-size: 12px;
+  color: #718096;
+}
+
+.itemHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.itemDueAmount {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-orange, #E8692A);
+}
+
+.itemCardBody {
+  padding: 14px 16px;
+  background: white;
+  border-top: 1px solid #E2E8F0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.itemFieldsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px 18px;
+}
+
+@media (max-width: 768px) {
+  .itemFieldsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Partial Payment Details Table (Matching Screenshot) ─────────────── */
+.noteText {
+  font-size: 11px;
+  color: #718096;
+  font-style: italic;
+}
+
+.tableScroll {
+  overflow-x: auto;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.th {
+  padding: 10px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #718096;
+  background: #F8F9FB;
+  text-align: left;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid #E2E8F0;
+  white-space: nowrap;
+}
+
+.td {
+  padding: 11px 12px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #2D3748;
+  border-bottom: 1px solid #E2E8F0;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.tdBold {
+  font-weight: 600;
+  color: #1A202C;
+}
+
+.tdCategoryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  color: #1A202C;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.tableSelect {
+  padding: 6px 9px;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 400;
+  outline: none;
+  background: white;
+  cursor: pointer;
+  color: #4A5568;
+}
+
+.tableInput {
+  width: 110px;
+  padding: 6px 9px;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: right;
+  outline: none;
+  color: #1A202C;
+  background: white;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: #F8F9FB;
+  border-radius: 6px;
+  font-size: 13.5px;
+  margin-top: 4px;
+}
+
+.totalLabel {
+  font-weight: 600;
+  color: #4A5568;
+}
+
+.totalValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A202C;
+}
+
+/* ─── Attachment Upload ──────────────────────────────────── */
+.uploadBox {
+  border: 1.5px dashed #FBD38D;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  background: #FFFDFB;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.uploadBox:hover {
+  background: #FFF6F3;
+  border-color: var(--brand-orange, #E8692A);
+}
+
+.uploadIcon {
+  color: var(--brand-orange, #E8692A);
+}
+
+.uploadText {
+  font-size: 13px;
+  color: #4A5568;
+  font-weight: 500;
+}
+
+.uploadHighlight {
+  color: var(--brand-orange, #E8692A);
+  text-decoration: underline;
+  font-weight: 600;
+}
