@@ -256,13 +256,13 @@
 }
 
 .flatLabel {
-  color: #64748B;
-  font-weight: 400;
+  color: #0F172A;
+  font-weight: 600;
 }
 
 .flatVal {
-  color: #0F172A;
-  font-weight: 500;
+  color: #475569;
+  font-weight: 400;
 }
 
 /* ─── Line Items Header Actions & Note ───────────────────── */
