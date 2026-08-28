@@ -55,8 +55,10 @@ const NAV_GROUPS = [
     icon: "lucide:settings",
     tone: "neutral",
     children: [
-      { id: "company", label: "Company Settings", icon: "lucide:building", href: "#" },
-      { id: "users", label: "Users & Roles", icon: "lucide:users", href: "#" },
+      { id: "configuration", label: "Configuration", icon: "lucide:settings", href: "/configuration" },
+      { id: "vendor-customer", label: "Vendor / Customer", icon: "lucide:users", href: "#" },
+      { id: "bank-management", label: "Bank Management", icon: "lucide:landmark", href: "#" },
+      { id: "notification", label: "Notification", icon: "lucide:bell", href: "#" },
     ],
   },
   {
@@ -65,8 +67,11 @@ const NAV_GROUPS = [
     icon: "lucide:file-text",
     tone: "neutral",
     children: [
-      { id: "financial", label: "Financial Reports", icon: "lucide:bar-chart-3", href: "#" },
-      { id: "audit", label: "Audit Trail", icon: "lucide:history", href: "#" },
+      { id: "reports-main", label: "Reports", icon: "lucide:file-bar-chart-2", href: "/reports" },
+      { id: "invoicenow-peppol", label: "InvoiceNow (Peppol)", icon: "lucide:calendar-days", href: "#" },
+      { id: "myinvois", label: "MyInvois", icon: "lucide:calendar-days", href: "#" },
+      { id: "gst-invoicenow", label: "GST InvoiceNow", icon: "lucide:calendar-days", href: "/gst-invoicenow" },
+      { id: "sap-transaction", label: "SAP Transaction", icon: "lucide:calendar-days", href: "#" },
     ],
   },
 ];

@@ -1,0 +1,332 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: 560px;
+  overflow: hidden;
+  animation: modalIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.modalTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.closeBtn:hover {
+  background-color: #f1f5f9;
+  color: #334155;
+}
+
+.modalBody {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Master Control Switch Card */
+.controlCard {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.controlRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.controlTitle {
+  font-size: 0.938rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.controlDesc {
+  font-size: 0.813rem;
+  color: #64748b;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Toggle Switch */
+.toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggleSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cbd5e1;
+  transition: 0.2s ease;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.2s ease;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+input:checked + .slider {
+  background-color: #e8692a;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Section Header */
+.sectionTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+/* Frequency Segmented Grid */
+.frequencyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.freqCard {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 12px 10px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.freqCard:hover {
+  border-color: #94a3b8;
+  background-color: #f8fafc;
+}
+
+.freqCardActive {
+  border-color: #e8692a !important;
+  background-color: #fff3ee !important;
+  box-shadow: 0 0 0 2px rgba(232, 105, 42, 0.15);
+}
+
+.freqIcon {
+  color: #64748b;
+}
+
+.freqCardActive .freqIcon {
+  color: #e8692a;
+}
+
+.freqLabel {
+  font-size: 0.813rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.freqCardActive .freqLabel {
+  color: #e8692a;
+}
+
+/* Config Sub-Panel */
+.subPanel {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.select, .input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  background-color: #ffffff;
+}
+
+.select:focus, .input:focus {
+  border-color: #e8692a;
+  box-shadow: 0 0 0 3px rgba(232, 105, 42, 0.15);
+}
+
+/* IRAS Reference Banner */
+.deadlineBox {
+  background-color: #fff8f5;
+  border: 1px solid #ffedd5;
+  border-left: 4px solid #e8692a;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.deadlineIcon {
+  color: #e8692a;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.deadlineTitle {
+  font-size: 0.813rem;
+  font-weight: 700;
+  color: #9a3412;
+  margin: 0 0 2px 0;
+}
+
+.deadlineText {
+  font-size: 0.75rem;
+  color: #c2410c;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Footer Buttons */
+.modalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #f1f5f9;
+  background-color: #f8fafc;
+}
+
+.btnSecondary {
+  padding: 9px 18px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnSecondary:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.btnPrimary {
+  padding: 9px 22px;
+  border: 1px solid #e8692a;
+  border-radius: 8px;
+  background-color: #e8692a;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(232, 105, 42, 0.25);
+}
+
+.btnPrimary:hover {
+  background-color: #d15619;
+  border-color: #d15619;
+  box-shadow: 0 4px 8px rgba(232, 105, 42, 0.35);
+}
