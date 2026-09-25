@@ -8,6 +8,7 @@ import GSTConfigurationModal from "@/components/GSTConfigurationModal";
 import SendToIRASModal from "@/components/SendToIRASModal";
 import RealtimeSubmissionAlertModal from "@/components/RealtimeSubmissionAlertModal";
 import GSTDocumentInfoDrawer from "@/components/GSTDocumentInfoDrawer";
+import ActionButton from "@/components/ActionButton";
 import styles from "./page.module.css";
 
 /* ── STATUS CARDS DATA ──────────────────────────────────── */
@@ -541,16 +542,14 @@ export default function GSTInvoiceNowPage() {
                         >
                           <td onClick={(e) => e.stopPropagation()}>
                             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                              <button
-                                className={styles.eyeBtn}
-                                title="View document information"
+                              <ActionButton
+                                type="view"
+                                tooltip="View"
                                 onClick={() => {
                                   setSelectedDocNo(row.docNo);
                                   setDocInfoDrawerOpen(true);
                                 }}
-                              >
-                                <Icon icon="lucide:eye" width={18} height={18} />
-                              </button>
+                              />
                               <input
                                 type="checkbox"
                                 checked={isSelected}

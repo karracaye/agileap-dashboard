@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import CreateReportModal from "@/components/CreateReportModal";
+import ActionButton from "@/components/ActionButton";
 import styles from "./page.module.css";
 
 const STANDARD_REPORTS = [
@@ -101,9 +102,7 @@ export default function ReportsPage() {
                 <div className={styles.reportCardMeta}>
                   <span className={styles.reportCardAuthor}>{report.author}</span>
                   <div className={styles.cardActions}>
-                    <button className={styles.iconBtn} title="Edit report">
-                      <Icon icon="lucide:edit-3" width={16} height={16} />
-                    </button>
+                    <ActionButton type="edit" tooltip="Edit" size={28} iconSize={14} />
                     <button
                       className={`${styles.iconBtn} ${styles.iconBtnDanger}`}
                       title="Delete report"

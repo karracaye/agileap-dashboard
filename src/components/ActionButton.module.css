@@ -1,0 +1,103 @@
+.wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Tooltip Styling ─────────────────────────────────────── */
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%) translateY(3px);
+  background: #FAFAFA;
+  color: #4A5568;
+  font-size: 11.5px;
+  font-weight: 500;
+  font-family: inherit;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+  z-index: 100;
+}
+
+/* Caret Arrow (Speech bubble pointer) */
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0 5px;
+  border-style: solid;
+  border-color: #FAFAFA transparent transparent transparent;
+  z-index: 2;
+}
+
+.tooltip::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px 6px 0 6px;
+  border-style: solid;
+  border-color: #CBD5E1 transparent transparent transparent;
+  z-index: 1;
+}
+
+.wrapper:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─── Base Button Styles ─────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+/* ─── View Button Style ──────────────────────────────────── */
+.viewBtn {
+  background-color: #FFFFFF;
+  border: 1px solid #D0D5DD;
+  color: #555555;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.viewBtn:hover {
+  background-color: #F8FAFC;
+  border-color: #94A3B8;
+  color: #1E293B;
+  box-shadow: 0 2px 4px rgba(16, 24, 40, 0.08);
+}
+
+/* ─── Edit Button Style ──────────────────────────────────── */
+.editBtn {
+  background-color: var(--brand-orange, #E8692A);
+  border: 1px solid var(--brand-orange, #E8692A);
+  color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(232, 105, 42, 0.25);
+}
+
+.editBtn:hover {
+  background-color: #D55A1D;
+  border-color: #D55A1D;
+  box-shadow: 0 3px 6px rgba(213, 90, 29, 0.35);
+}

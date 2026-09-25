@@ -8,6 +8,7 @@ import StatusCard from "@/components/StatusCard";
 import ImportModal from "@/components/ImportModal";
 import styles from "./page.module.css";
 import { Icon } from "@iconify/react";
+import ActionButton from "@/components/ActionButton";
 
 interface SoaRow {
   id: string;
@@ -406,11 +407,8 @@ export default function SoaReceivedPage() {
 
                             <td className={styles.td} onClick={e => e.stopPropagation()}>
                               <div className={styles.actionCell}>
-                                <Link href="/bills-to-pay/review">
-                                  <Icon icon="lucide:eye" width={16} className={styles.actionIcon} />
-                                </Link>
-                                <Icon icon="lucide:file-pen" width={16} className={styles.actionIcon} />
-                                <Icon icon="lucide:printer" width={16} className={styles.actionIcon} />
+                                <ActionButton type="view" href="/bills-to-pay/review" tooltip="View" />
+                                <ActionButton type="edit" href="/bills-to-pay/new" tooltip="Edit" />
                               </div>
                             </td>
 

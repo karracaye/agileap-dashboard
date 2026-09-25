@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
+import ActionButton from "./ActionButton";
 import styles from "./InvoiceTable.module.css";
 
 /* ─── Column definitions ────────────────────────────────── */
@@ -320,12 +321,8 @@ export default function InvoiceTable() {
                   >
                     <td className={styles.td} onClick={e => e.stopPropagation()}>
                       <div className={styles.actionCell}>
-                        <Link href="/bills-to-pay/review" title="View Bill">
-                          <Icon icon="lucide:eye" width={16} className={styles.actionIcon} />
-                        </Link>
-                        <Link href="/bills-to-pay/new" title="Edit Bill">
-                          <Icon icon="lucide:file-pen" width={16} className={styles.actionIcon} />
-                        </Link>
+                        <ActionButton type="view" href="/bills-to-pay/review" tooltip="View" />
+                        <ActionButton type="edit" href="/bills-to-pay/new" tooltip="Edit" />
                       </div>
                     </td>
 
