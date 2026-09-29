@@ -1,0 +1,585 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modalCard {
+  background: white;
+  width: 100%;
+  max-width: 640px;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.2s ease-out;
+  margin: auto 0;
+  position: relative;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(12px) scale(0.98); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 24px 16px 24px;
+  border-bottom: 1px solid #F1F5F9;
+  background: white;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0F172A;
+  letter-spacing: -0.3px;
+  margin: 0;
+}
+
+.modalSub {
+  font-size: 13px;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.btnClose {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnClose:hover {
+  background: #F1F5F9;
+  color: #0F172A;
+}
+
+.modalBody {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: visible;
+}
+
+/* Amount Header Box */
+.amountCard {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.amountLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.amountLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748B;
+}
+
+.amountValue {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+/* Mode Tab Switcher Bar */
+.tabBar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px;
+  background: #F1F5F9;
+  padding: 4px;
+  border-radius: 12px;
+}
+
+.tabBtn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tabBtnActive {
+  background: white;
+  color: #E8692A;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.modeHelperText {
+  font-size: 13px;
+  color: #64748B;
+  line-height: 1.4;
+  margin-top: -4px;
+}
+
+/* Controls Toolbar */
+.controlRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.radioRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.radioOption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.radioInput {
+  accent-color: #E8692A;
+  width: 15px;
+  height: 15px;
+}
+
+/* Form inputs & dropdowns */
+.input, .select {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #0F172A;
+  background-color: white;
+  box-sizing: border-box;
+  display: block;
+  transition: border-color 0.15s ease;
+}
+
+.input:focus, .select:focus {
+  border-color: #E8692A;
+  outline: none;
+}
+
+.percentInputWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  padding: 0 10px;
+  height: 38px;
+  background: white;
+  width: 90px;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.percentInput {
+  border: none;
+  outline: none;
+  width: 50px;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0F172A;
+  background: transparent;
+}
+
+.percentSymbol {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748B;
+}
+
+/* Form grid for Rule Based */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.required {
+  color: #DC2626;
+  margin-left: 2px;
+}
+
+/* Table styling */
+.tableContainer {
+  width: 100%;
+  border-top: 1px solid #F1F5F9;
+  border-bottom: 1px solid #F1F5F9;
+  overflow-x: auto;
+  overflow-y: visible;
+  min-height: 80px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background: white;
+  padding: 10px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748B;
+  text-align: left;
+  border-bottom: 1px solid #E2E8F0;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #0F172A;
+  border-bottom: 1px solid #F1F5F9;
+  vertical-align: middle;
+  height: 48px;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.btnDeleteRow {
+  background: transparent;
+  border: none;
+  color: #DC2626;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.btnDeleteRow:hover {
+  background: #FEE2E2;
+}
+
+.btnAddRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #E8692A;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.btnAddRow:hover {
+  text-decoration: underline;
+}
+
+/* Summary Grid Cards */
+.summaryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.summaryCard {
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summaryLabel {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #64748B;
+}
+
+.summaryValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+/* Banners */
+.ruleLockBanner {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: #1E40AF;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.4;
+}
+
+/* Department Dropdown Accordion Cards for Rule-Based Mode */
+.deptGroupCard {
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+}
+
+.deptGroupHeader {
+  padding: 10px 14px;
+  background: #F8FAFC;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0F172A;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+.deptGroupHeader:hover {
+  background: #F1F5F9;
+}
+
+.deptGroupLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.deptGroupRight {
+  font-weight: 600;
+  color: #E8692A;
+  font-size: 12px;
+}
+
+.validationBannerValid {
+  background: #E8F5E9;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1B5E20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.roundingNote {
+  font-size: 11.5px;
+  color: #64748B;
+  margin-top: -4px;
+}
+
+.validationBannerInvalid {
+  background: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #991B1B;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Two-Level Specific Sections */
+.levelSectionTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0F172A;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.customerBreakdownCard {
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+}
+
+.customerBreakdownHeader {
+  padding: 10px 14px;
+  background: #F8FAFC;
+  border-bottom: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0F172A;
+  transition: background 0.15s ease;
+}
+
+.customerBreakdownHeader:hover {
+  background: #F1F5F9;
+}
+
+.customerRuleMeta {
+  font-size: 11.5px;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.resultByStaffCard {
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 14px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resultGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 24px;
+  font-size: 12.5px;
+}
+
+.resultRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resultName {
+  font-weight: 500;
+  color: #334155;
+}
+
+.resultAmount {
+  font-weight: 600;
+  color: #0F172A;
+}
+
+/* Modal Footer (Standard 8px rounded module buttons) */
+.modalFooter {
+  padding: 14px 24px;
+  border-top: 1px solid #F1F5F9;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  background: white;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.btnCancel {
+  padding: 9px 20px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  background: white;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnCancel:hover {
+  background: #F8FAFC;
+  color: #0F172A;
+  border-color: #94A3B8;
+}
+
+.btnSubmit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 22px;
+  border: 1px solid #E8692A;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  background: #E8692A;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnSubmit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #CBD5E1;
+  background: #CBD5E1;
+  color: #64748B;
+}
+
+.btnSubmit:not(:disabled):hover {
+  background: #D95A1B;
+  border-color: #D95A1B;
+}

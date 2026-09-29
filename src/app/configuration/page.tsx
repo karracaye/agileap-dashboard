@@ -38,7 +38,9 @@ export default function ConfigurationPage() {
                   </Link>
                   <div className={styles.cardBtn}>Location Management</div>
                   <div className={styles.cardBtn}>GL Codes</div>
-                  <div className={styles.cardBtn}>Cost Centre</div>
+                  <Link href="/configuration/cost-centre" className={styles.cardBtn}>
+                    Cost Centre
+                  </Link>
                   <div className={styles.cardBtn}>Taxes</div>
                   <div className={styles.cardBtn}>Custom Numbering</div>
                   <div className={styles.cardBtn}>Payment Terms</div>
@@ -90,6 +92,9 @@ export default function ConfigurationPage() {
                 <h3 className={styles.sectionTitle}>User Management</h3>
                 <div className={styles.list}>
                   <div className={styles.cardBtn}>User Management</div>
+                  <Link href="/configuration/staff-management" className={styles.cardBtn}>
+                    Staff Management
+                  </Link>
                   <div className={styles.cardBtn}>Role Access</div>
                   <div
                     className={styles.cardBtn}

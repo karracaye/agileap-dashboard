@@ -27,7 +27,7 @@ const NAV_GROUPS = [
       { id: "purchase-req", label: "Purchase Requisition", icon: "lucide:clipboard-list", href: "#" },
       { id: "goods-receipt", label: "Goods Receipt", icon: "lucide:package-check", href: "#" },
       { id: "bills-to-pay", label: "Bills To Pay", icon: "lucide:receipt-text", href: "/" },
-      { id: "claims", label: "Claims / Petty Cash", icon: "lucide:wallet-cards", href: "#" },
+      { id: "claims", label: "Claims / Petty Cash", icon: "lucide:wallet-cards", href: "/claims" },
       { id: "purchase-order", label: "Purchase Order", icon: "lucide:shopping-cart", href: "#" },
       { id: "vendor-credit", label: "Vendor Credit Note", icon: "lucide:file-pen-line", href: "#" },
       { id: "payment", label: "Payment", icon: "lucide:circle-dollar-sign", href: "/payment" },

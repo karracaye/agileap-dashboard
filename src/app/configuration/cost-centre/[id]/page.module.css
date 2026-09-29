@@ -1,0 +1,600 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: #F8FAFC;
+  font-family: inherit;
+  color: #0F172A;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pageBody {
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header & Breadcrumb */
+.topHeaderRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.breadcrumbLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748B;
+  text-decoration: none;
+  transition: color 0.15s ease;
+  margin-bottom: 6px;
+}
+
+.breadcrumbLink:hover {
+  color: #E8692A;
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+}
+
+.pageTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0F172A;
+  letter-spacing: -0.4px;
+}
+
+.pageSub {
+  font-size: 13px;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+/* Top Header Action Controls Bar - Aligned to the Right Side */
+.controlsBar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.versionSelectDropdown {
+  padding: 8.5px 14px;
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+  background: white;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0F172A;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.versionSelectDropdown:focus {
+  border-color: #E8692A;
+  box-shadow: 0 0 0 3px rgba(232, 105, 42, 0.15);
+}
+
+.btnSecondaryIcon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8.5px 16px;
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+  background: white;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.btnSecondaryIcon:hover {
+  background: #F1F5F9;
+  border-color: #94A3B8;
+  color: #0F172A;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8.5px 20px;
+  border-radius: 8px;
+  border: 1px solid #E8692A;
+  background: #E8692A;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(232, 105, 42, 0.2);
+}
+
+.btnPrimary:hover {
+  background: #D95A1B;
+  border-color: #D95A1B;
+}
+
+/* Compact 2-Column Grid Layout: Minimized Left Switcher (200px) + Highlighted Main Stack */
+.layoutGrid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Card Container Base */
+.card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Minimized & Simple Left Panel: Cost Centre List */
+.leftHeader {
+  padding: 12px 14px;
+  border-bottom: 1px solid #F1F5F9;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #FAFAFA;
+}
+
+.leftTitle {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.searchBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 8px;
+  color: #94A3B8;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 6px 10px 6px 28px;
+  border-radius: 6px;
+  border: 1px solid #CBD5E1;
+  font-size: 11.5px;
+  outline: none;
+}
+
+.searchInput:focus {
+  border-color: #E8692A;
+}
+
+.ccList {
+  display: flex;
+  flex-direction: column;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.ccItem {
+  padding: 9px 12px;
+  border-bottom: 1px solid #F8FAFC;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+
+.ccItem:hover {
+  background: #F8FAFC;
+}
+
+.ccItemActive {
+  background: #FFF9F7;
+  border-left: 3px solid #E8692A;
+  font-weight: 700;
+}
+
+.ccCode {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.ccBadge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 99px;
+  background: #DCFCE7;
+  color: #15803D;
+}
+
+/* Right Main Stack - Highlighting the Versions & Rules */
+.mainStack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Compact Protection Alert Banner (Item 2 UX Analysis) */
+.protectionBanner {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 10px;
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.protectionBannerIcon {
+  color: #2563EB;
+  flex-shrink: 0;
+}
+
+.protectionText {
+  font-size: 12.5px;
+  color: #1E40AF;
+  line-height: 1.4;
+}
+
+/* Highlighted Active Version Card Header */
+.activeVersionHeader {
+  padding: 16px 20px;
+  border-bottom: 1px solid #F1F5F9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FAFAFA;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.activeVersionTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.versionBadgeActive {
+  font-size: 11px;
+  font-weight: 700;
+  color: #15803D;
+  background: #DCFCE7;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
+.badgeScheduled {
+  font-size: 11px;
+  font-weight: 700;
+  color: #0284C7;
+  background: #E0F2FE;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
+.badgeSuperseded {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748B;
+  background: #F1F5F9;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
+.versionMeta {
+  font-size: 12.5px;
+  color: #64748B;
+}
+
+/* Temporal Descriptor Box - Right Side & Smaller (User Request) */
+.versionDescriptorBox {
+  font-size: 11.5px;
+  color: #64748B;
+  background: #F1F5F9;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border-left: 3px solid #CBD5E1;
+  margin-left: auto;
+}
+
+/* Highlighted Full-Width Table */
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background: #F8FAFC;
+  padding: 13px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+  text-align: left;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.table td {
+  padding: 13px 20px;
+  font-size: 13px;
+  color: #0F172A;
+  border-bottom: 1px solid #F1F5F9;
+  vertical-align: middle;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background: #FAFAFA;
+}
+
+.percentBadge {
+  font-weight: 700;
+  color: #E8692A;
+  background: #FFF0E8;
+  padding: 3px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  font-size: 12.5px;
+}
+
+/* Action Cell aligned to the Right Side (Project Standard) */
+.actionCell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Red Square Delete Button matching btnIconDelete across the whole project */
+.btnIconDelete {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: none;
+  background: #FEE2E2;
+  color: #DC2626;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnIconDelete:hover {
+  background: #FCA5A5;
+  color: #991B1B;
+}
+
+.cardFooter {
+  padding: 12px 20px;
+  background: #F8FAFC;
+  border-top: 1px solid #F1F5F9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: #64748B;
+}
+
+/* Right-Side Audit History Slide-Over Drawer Modal */
+.drawerOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.drawerCard {
+  width: 100%;
+  max-width: 440px;
+  height: 100%;
+  background: white;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  animation: slideLeft 0.25s ease-out;
+}
+
+@keyframes slideLeft {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.drawerHeader {
+  padding: 20px 24px;
+  border-bottom: 1px solid #F1F5F9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FAFAFA;
+}
+
+.drawerTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.btnCloseDrawer {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnCloseDrawer:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+.drawerBody {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.drawerSearchBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.drawerSearchIcon {
+  position: absolute;
+  left: 12px;
+  color: #94A3B8;
+  pointer-events: none;
+}
+
+.drawerSearchInput {
+  width: 100%;
+  padding: 9.5px 12px 9.5px 36px;
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.drawerSearchInput:focus {
+  border-color: #E8692A;
+}
+
+.auditTabRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.auditTab {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748B;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.auditTabActive {
+  background: #FFF0E8;
+  color: #E8692A;
+  border-color: #FED7AA;
+}
+
+.auditTimeline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.auditItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.auditItem:last-child {
+  border-bottom: none;
+}
+
+.auditIconDot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #EFF6FF;
+  color: #2563EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.auditContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.auditEventTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.auditEventMeta {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.auditEventTime {
+  font-size: 11.5px;
+  color: #94A3B8;
+}

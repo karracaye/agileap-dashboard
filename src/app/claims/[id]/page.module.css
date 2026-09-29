@@ -1,0 +1,408 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: #F8FAFC;
+  font-family: inherit;
+  color: #0F172A;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pageBody {
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Header & Breadcrumb */
+.topHeaderRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.breadcrumbLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748B;
+  text-decoration: none;
+  transition: color 0.15s ease;
+  margin-bottom: 4px;
+}
+
+.breadcrumbLink:hover {
+  color: #E8692A;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pageTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #0F172A;
+  letter-spacing: -0.4px;
+}
+
+.badgeDraft {
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  background: #E2E8F0;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.claimIdText {
+  font-size: 14px;
+  color: #64748B;
+  font-weight: 600;
+}
+
+/* Header Action Buttons */
+.controlsBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btnSecondary {
+  padding: 9.5px 22px;
+  border-radius: 8px;
+  border: 1px solid #E8692A;
+  background: white;
+  color: #E8692A;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnSecondary:hover {
+  background: #FFF0E8;
+}
+
+.btnPrimary {
+  padding: 9.5px 24px;
+  border-radius: 8px;
+  border: 1px solid #E8692A;
+  background: #E8692A;
+  color: white;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(232, 105, 42, 0.2);
+}
+
+.btnPrimary:hover {
+  background: #D95A1B;
+  border-color: #D95A1B;
+}
+
+/* Base Card */
+.card {
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Form Fields Grid */
+.fieldsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: #0F172A;
+  background: white;
+}
+
+.input:focus {
+  border-color: #E8692A;
+  outline: none;
+}
+
+/* Line Items Card */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.tableContainer {
+  width: 100%;
+  overflow: visible;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background: #F8FAFC;
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  text-align: left;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.table td {
+  padding: 14px 16px;
+  font-size: 13.5px;
+  color: #0F172A;
+  border-bottom: 1px solid #F1F5F9;
+  vertical-align: middle;
+  position: relative;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Item 13 Allocation Chip Wrapper & Hover Popover Tooltip */
+.chipWrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.popoverTooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: #0F172A;
+  color: white;
+  font-size: 11.5px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.popoverTitle {
+  font-weight: 600;
+  color: #FED7AA;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 4px;
+  margin-bottom: 2px;
+}
+
+.popoverItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.popoverTooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px 6px 0 6px;
+  border-style: solid;
+  border-color: #0F172A transparent transparent transparent;
+}
+
+.chipWrapper:hover .popoverTooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Allocation Tag Buttons matching media_1790570826680.png */
+.btnAllocNotSplit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px dashed #CBD5E1;
+  background: #F8FAFC;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.btnAllocNotSplit:hover {
+  border-color: #94A3B8;
+  background: #F1F5F9;
+}
+
+.btnAllocManual {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #FFEDD5;
+  background: #FFF7ED;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #C2410C;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnAllocManual:hover {
+  background: #FFEDD5;
+}
+
+.btnAllocTwoLevel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #DDD6FE;
+  background: #F5F3FF;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #6D28D9;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnAllocTwoLevel:hover {
+  background: #EDE9FE;
+}
+
+.btnAllocRule {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #BAE6FD;
+  background: #F0F9FF;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0369A1;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnAllocRule:hover {
+  background: #E0F2FE;
+}
+
+.btnExpandIcon {
+  color: #E8692A;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: transform 0.15s ease;
+}
+
+.btnExpandIcon:hover {
+  transform: scale(1.1);
+}
+
+.btnAddRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #E8692A;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 0;
+}
+
+.btnAddRow:hover {
+  text-decoration: underline;
+}
+
+/* Totals Summary Footer */
+.totalsBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  padding-top: 12px;
+  border-top: 1px solid #F1F5F9;
+}
+
+.totalRow {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 13px;
+  color: #64748B;
+}
+
+.totalClaimRow {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #0F172A;
+  margin-top: 2px;
+}
