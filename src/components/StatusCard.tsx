@@ -29,29 +29,27 @@ export default function StatusCard({
 }: StatusCardProps) {
   const hasAmount = Boolean(amount && amount.trim() !== "");
   const displayAmount = hasAmount ? amount : "0.00";
+  const isZero = count === 0;
+  const effectiveColor = isZero ? "#475569" : color;
+  const effectiveBg = isZero ? "#EEF2F6" : bgColor;
 
   return (
     <button
       type="button"
-      className={`${styles.card} ${active ? styles.cardActive : ""}`}
+      className={`${styles.card} ${isZero ? styles.cardZero : ""} ${active ? styles.cardActive : ""}`}
       onClick={onClick}
-      style={{ "--accent": color, "--accent-bg": bgColor } as React.CSSProperties}
+      style={{ "--accent": effectiveColor, "--accent-bg": effectiveBg } as React.CSSProperties}
       aria-pressed={active}
       aria-label={label}
     >
       <div className={styles.topRow}>
-        <div className={styles.iconWrap} style={{ background: bgColor, color }}>
-          <Icon icon={icon} width={16} height={16} aria-hidden="true" />
-        </div>
+        <span className={styles.label}>{label}</span>
         <span className={styles.countBadge}>{count}</span>
       </div>
 
-      <div>
-        <div className={styles.middleRow}>
-          <span className={styles.amount}>{displayAmount}</span>
-          <span className={styles.currency}>{currency}</span>
-        </div>
-        <p className={styles.label}>{label}</p>
+      <div className={styles.middleRow}>
+        <span className={styles.amount}>{displayAmount}</span>
+        <span className={styles.currency}>{currency}</span>
       </div>
 
       <span className={styles.activeBar} />

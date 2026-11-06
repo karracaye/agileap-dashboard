@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import styles from "./NewRuleVersionModal.module.css";
 import { Icon } from "@iconify/react";
+import ExitConfirmationModal from "./ExitConfirmationModal";
 
 export interface StaffAllocationRow {
   staffCode: string;
@@ -43,7 +44,17 @@ export default function NewRuleVersionModal({
   currentVersionNumber = 2,
   onSaveVersion,
 }: NewRuleVersionModalProps) {
+  const [showExitModal, setShowExitModal] = useState(false);
   const newVersionNumber = currentVersionNumber + 1;
+
+  const handleAttemptClose = () => {
+    setShowExitModal(true);
+  };
+
+  const handleConfirmClose = () => {
+    setShowExitModal(false);
+    onClose();
+  };
 
   const [copyFrom, setCopyFrom] = useState(`Version ${currentVersionNumber} (Active)`);
   const [startDate, setStartDate] = useState("2027-01-01");
@@ -135,22 +146,23 @@ export default function NewRuleVersionModal({
   };
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
-        {/* Modal Header */}
-        <div className={styles.modalHeader}>
-          <div className={styles.titleGroup}>
-            <h2 className={styles.modalTitle}>New Allocation Version</h2>
-            <span className={styles.modalSub}>
-              {costCentreCode} · {costCentreName} · this will be Version {newVersionNumber}
-            </span>
+    <>
+      <div className={styles.overlay} onClick={handleAttemptClose}>
+        <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
+          {/* Modal Header */}
+          <div className={styles.modalHeader}>
+            <div className={styles.titleGroup}>
+              <h2 className={styles.modalTitle}>New Allocation Version</h2>
+              <span className={styles.modalSub}>
+                {costCentreCode} · {costCentreName} · this will be Version {newVersionNumber}
+              </span>
+            </div>
+            <button className={styles.btnClose} onClick={handleAttemptClose} aria-label="Close modal">
+              <Icon icon="lucide:x" width={18} />
+            </button>
           </div>
-          <button className={styles.btnClose} onClick={onClose} aria-label="Close modal">
-            <Icon icon="lucide:x" width={18} />
-          </button>
-        </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.modalForm}>
           <div className={styles.modalBody}>
             {/* Form Controls Grid */}
             <div className={styles.formGrid}>
@@ -302,7 +314,7 @@ export default function NewRuleVersionModal({
 
           {/* Modal Footer */}
           <div className={styles.modalFooter}>
-            <button type="button" className={styles.btnCancel} onClick={onClose}>
+            <button type="button" className={styles.btnCancel} onClick={handleAttemptClose}>
               Cancel
             </button>
             <button
@@ -316,5 +328,12 @@ export default function NewRuleVersionModal({
         </form>
       </div>
     </div>
+
+    <ExitConfirmationModal
+      isOpen={showExitModal}
+      onConfirm={handleConfirmClose}
+      onCancel={() => setShowExitModal(false)}
+    />
+  </>
   );
 }

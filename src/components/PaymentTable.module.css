@@ -364,7 +364,7 @@
 .rowSel::after { background: #FFE4D4 !important; }
 
 .rowExp {
-  background: #FFF9F7 !important;
+  background: #FFF8F5 !important;
 }
 .rowExp::after { opacity: 0; }
 
@@ -465,7 +465,7 @@
 
 .expandTd {
   padding: 0;
-  background: #FDFAF8;
+  background: #FFF8F5;
   border-bottom: 1px solid var(--border);
 }
 
@@ -503,10 +503,10 @@
   gap: 4px;
 }
 .chipLabel {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--text-muted);
-  letter-spacing: 0.08em;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #0F172A;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 .chipValue {

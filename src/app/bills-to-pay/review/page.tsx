@@ -1,11 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import styles from "./page.module.css";
 import { Icon } from "@iconify/react";
+
+export interface AttachmentFile {
+  id: string;
+  name: string;
+  size: string;
+  type: "excel" | "word" | "pdf" | "image" | "other";
+  uploadDate: string;
+}
 
 export default function ReviewBillPage() {
   const [vendorCollapsed, setVendorCollapsed] = useState(false);
@@ -16,6 +24,68 @@ export default function ReviewBillPage() {
 
   // Line items view mode: "dropdown" (default - no right scrolling needed!) vs "table"
   const [viewMode, setViewMode] = useState<"dropdown" | "table">("dropdown");
+
+  // Attachments State (Matching Image 2)
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [attachments, setAttachments] = useState<AttachmentFile[]>([
+    {
+      id: "1",
+      name: "AR-Inline-Document-Number_UAT2_20261026.xlsx",
+      size: "45 KB",
+      type: "excel",
+      uploadDate: "2026-10-26",
+    },
+    {
+      id: "2",
+      name: "AgileAP_Numbering_Requirements.docx",
+      size: "128 KB",
+      type: "word",
+      uploadDate: "2026-10-26",
+    },
+  ]);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const newFiles: AttachmentFile[] = Array.from(e.target.files).map((f) => {
+        let ftype: "excel" | "word" | "pdf" | "image" | "other" = "other";
+        if (f.name.endsWith(".xlsx") || f.name.endsWith(".xls") || f.name.endsWith(".csv")) ftype = "excel";
+        else if (f.name.endsWith(".docx") || f.name.endsWith(".doc")) ftype = "word";
+        else if (f.name.endsWith(".pdf")) ftype = "pdf";
+        else if (f.name.match(/\.(jpg|jpeg|png|webp|gif)$/i)) ftype = "image";
+
+        const sizeKb = Math.round(f.size / 1024);
+        return {
+          id: `file_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+          name: f.name,
+          size: sizeKb > 1024 ? `${(sizeKb / 1024).toFixed(1)} MB` : `${sizeKb || 1} KB`,
+          type: ftype,
+          uploadDate: new Date().toISOString().split("T")[0],
+        };
+      });
+      setAttachments((prev) => [...prev, ...newFiles]);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  const handleRemoveAttachment = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setAttachments((prev) => prev.filter((a) => a.id !== id));
+  };
+
+  const getFileIcon = (file: AttachmentFile) => {
+    switch (file.type) {
+      case "excel":
+        return <Icon icon="lucide:file-spreadsheet" width={17} className={styles.attachmentIconOrange} />;
+      case "word":
+        return <Icon icon="lucide:file-text" width={17} className={styles.attachmentIconOrange} />;
+      case "pdf":
+        return <Icon icon="lucide:file-check-2" width={17} className={styles.attachmentIconOrange} />;
+      case "image":
+        return <Icon icon="lucide:image" width={17} className={styles.attachmentIconOrange} />;
+      default:
+        return <Icon icon="lucide:file" width={17} className={styles.attachmentIconOrange} />;
+    }
+  };
 
   return (
     <div className={styles.appShell}>
@@ -53,8 +123,8 @@ export default function ReviewBillPage() {
               <button className={styles.btnIconButton} title="More Actions">
                 <Icon icon="lucide:more-vertical" width={16} />
               </button>
-              <Link href="/" className={styles.btnIconButton} title="Back to Bills To Pay">
-                <Icon icon="lucide:chevron-left" width={18} />
+              <Link href="/" className={styles.btnSecondary}>
+                Back
               </Link>
             </div>
           </div>
@@ -209,12 +279,70 @@ export default function ReviewBillPage() {
 
             {!attachCollapsed && (
               <div className={styles.sectionBody}>
-                <div className={styles.uploadBox}>
+                {/* Hidden File Input */}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                  multiple
+                  onChange={handleFileUpload}
+                />
+
+                {/* Upload Box */}
+                <div
+                  className={styles.uploadBox}
+                  onClick={() => fileInputRef.current?.click()}
+                  title="Click to browse and upload files"
+                >
                   <Icon icon="lucide:cloud-upload" width={28} style={{ color: "#E8692A" }} />
                   <p className={styles.uploadText}>
                     Click here to <span className={styles.uploadHighlight}>upload</span> your file.
                   </p>
                 </div>
+
+                {/* Uploaded Attachments List (Matching Image 2) */}
+                {attachments.length > 0 && (
+                  <div className={styles.attachmentContainer}>
+                    <div className={styles.attachmentList}>
+                      {attachments.map((file) => (
+                        <div
+                          key={file.id}
+                          className={styles.attachmentCard}
+                          title={file.name}
+                        >
+                          <div className={styles.attachmentIconBox}>
+                            {getFileIcon(file)}
+                          </div>
+                          <div className={styles.attachmentInfo}>
+                            <span className={styles.attachmentName}>{file.name}</span>
+                            <span className={styles.attachmentMeta}>({file.size})</span>
+                          </div>
+                          <div className={styles.attachmentActions}>
+                            <button
+                              type="button"
+                              className={styles.attachmentActionBtn}
+                              title="Download"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                alert(`Downloading ${file.name}...`);
+                              }}
+                            >
+                              <Icon icon="lucide:download" width={14} />
+                            </button>
+                            <button
+                              type="button"
+                              className={styles.attachmentDeleteBtn}
+                              title="Remove attachment"
+                              onClick={(e) => handleRemoveAttachment(file.id, e)}
+                            >
+                              <Icon icon="lucide:x" width={14} />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

@@ -9,16 +9,17 @@ import SendToIRASModal from "@/components/SendToIRASModal";
 import RealtimeSubmissionAlertModal from "@/components/RealtimeSubmissionAlertModal";
 import GSTDocumentInfoDrawer from "@/components/GSTDocumentInfoDrawer";
 import ActionButton from "@/components/ActionButton";
+import StatusSummarySection from "@/components/StatusSummarySection";
 import styles from "./page.module.css";
 
 /* ── STATUS CARDS DATA ──────────────────────────────────── */
 const CARDS = [
-  { id: "all", label: "All", count: 477, amount: "249,747.19", icon: "lucide:copy", color: "#2563eb", bg: "#eff6ff" },
-  { id: "invoice", label: "Invoice", count: 415, amount: "233,005.37", icon: "lucide:file-text", color: "#7c3aed", bg: "#f5f3ff" },
-  { id: "bills-to-pay", label: "Bills To Pay", count: 29, amount: "6,721.00", icon: "lucide:wallet", color: "#e8692a", bg: "#fff3ee" },
-  { id: "credit-note", label: "Credit Note", count: 20, amount: "7,561.03", icon: "lucide:file-check-2", color: "#16a34a", bg: "#f0fdf4" },
-  { id: "vendor-credit-note", label: "Vendor Credit Note", count: 5, amount: "1,932.39", icon: "lucide:file-minus", color: "#dc2626", bg: "#fef2f2" },
-  { id: "claims", label: "Claims / Petty Cash", count: 8, amount: "527.40", icon: "lucide:wallet-cards", color: "#9333ea", bg: "#faf5ff" },
+  { id: "all", label: "All", count: 477, amount: "249,747.19", currency: "SGD", icon: "lucide:copy", color: "#16A34A", bg: "#DCFCE7", bgColor: "#DCFCE7" },
+  { id: "invoice", label: "Invoice", count: 415, amount: "233,005.37", currency: "SGD", icon: "lucide:file-text", color: "#16A34A", bg: "#DCFCE7", bgColor: "#DCFCE7" },
+  { id: "bills-to-pay", label: "Bills To Pay", count: 29, amount: "6,721.00", currency: "SGD", icon: "lucide:wallet", color: "#E8692A", bg: "#FFF0E8", bgColor: "#FFF0E8" },
+  { id: "credit-note", label: "Credit Note", count: 20, amount: "7,561.03", currency: "SGD", icon: "lucide:file-check-2", color: "#16A34A", bg: "#DCFCE7", bgColor: "#DCFCE7" },
+  { id: "vendor-credit-note", label: "Vendor Credit Note", count: 5, amount: "1,932.39", currency: "SGD", icon: "lucide:file-minus", color: "#E8692A", bg: "#FFF0E8", bgColor: "#FFF0E8" },
+  { id: "claims", label: "Claims / Petty Cash", count: 8, amount: "527.40", currency: "SGD", icon: "lucide:wallet-cards", color: "#E8692A", bg: "#FFF0E8", bgColor: "#FFF0E8" },
 ];
 
 /* ── COLUMN DEFINITIONS ─────────────────────────────────── */
@@ -314,34 +315,13 @@ export default function GSTInvoiceNowPage() {
             </div>
           </div>
 
-          {/* 6 Metric Filter Cards */}
-          <div className={styles.cardsGrid}>
-            {CARDS.map((card) => {
-              const isActive = activeCard === card.id;
-              return (
-                <div
-                  key={card.id}
-                  className={`${styles.card} ${isActive ? styles.cardActive : ""}`}
-                  onClick={() => setActiveCard(card.id)}
-                >
-                  <div className={styles.cardTop}>
-                    <div className={styles.cardIconWrap} style={{ background: card.bg, color: card.color }}>
-                      <Icon icon={card.icon} width={18} height={18} />
-                    </div>
-                    <span className={styles.cardDocCount}>{card.count} Documents</span>
-                  </div>
-                  <div className={styles.cardBody}>
-                    <div className={styles.cardLabel}>{card.label}</div>
-                    <div className={styles.cardAmount}>{card.amount}</div>
-                    <div className={styles.cardSubLabel}>
-                      SGD Tax Amount
-                      <Icon icon="lucide:info" width={12} height={12} />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          {/* 6 Metric Filter Cards / Listing Toggle */}
+          <StatusSummarySection
+            cards={CARDS}
+            activeId={activeCard}
+            onSelect={(card) => setActiveCard(card.id)}
+            gridClassName={styles.cardsGrid}
+          />
 
           {/* Instruction H: IRAS Submission Deadline Reminder Banner */}
           <div className={styles.deadlineBanner}>
@@ -401,10 +381,15 @@ export default function GSTInvoiceNowPage() {
                   className={`${styles.colBtn} ${pickerOpen ? styles.colBtnActive : ""}`}
                   onClick={() => setPickerOpen((prev) => !prev)}
                 >
-                  <Icon icon="lucide:columns-3" width={15} />
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                  </svg>
                   Columns
                   <span className={styles.colBadge}>{visibleCols.length}</span>
-                  <Icon icon="lucide:chevron-down" width={13} />
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                    <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </button>
 
                 {pickerOpen && (
@@ -447,8 +432,8 @@ export default function GSTInvoiceNowPage() {
 
               {/* Filter Button */}
               <button className={styles.btnFilter}>
-                <Icon icon="lucide:sliders-horizontal" width={14} />
-                Filter
+                <Icon icon="lucide:filter" width={14} />
+                <span>Filter</span>
               </button>
 
               {/* Send to IRAS Button (Selection Guarded) */}
@@ -467,7 +452,7 @@ export default function GSTInvoiceNowPage() {
                 <Icon icon="lucide:search" width={16} className={styles.searchIcon} />
                 <input
                   type="text"
-                  placeholder="Search by keywords"
+                  placeholder="Search by Document No."
                   className={styles.searchInput}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -482,23 +467,23 @@ export default function GSTInvoiceNowPage() {
               <table className={styles.table}>
                 <thead>
                   <tr>
-                    <th>Action</th>
-                    {visibleCols.includes("no") && <th>No.</th>}
-                    {visibleCols.includes("docNo") && <th>Document No. ↓</th>}
-                    {visibleCols.includes("type") && <th>Type ↓</th>}
-                    {visibleCols.includes("subTotal") && <th>Sub Total ↓</th>}
-                    {visibleCols.includes("taxAmount") && <th>Tax Amount ↓</th>}
-                    {visibleCols.includes("totalAmount") && <th>Total Amount (Incl Tax) ↓</th>}
-                    {visibleCols.includes("dualStatus") && <th>InvoiceNow / IRAS Status ↓</th>}
-                    {visibleCols.includes("status") && <th>Status ↓</th>}
-                    {visibleCols.includes("outcome") && <th>Outcome ↓</th>}
-                    {visibleCols.includes("docHash") && <th>Doc Hash</th>}
-                    {visibleCols.includes("gstTransId") && <th>GST InvoiceNow Trans. ID ↓</th>}
-                    {visibleCols.includes("peppolTransId") && <th>InvoiceNow / Peppol Trans. ID ↓</th>}
-                    {visibleCols.includes("acknowledgementId") && <th>Acknowledgement ID ↓</th>}
-                    {visibleCols.includes("filedDate") && <th>Filed Date ↓</th>}
-                    {visibleCols.includes("submissionDate") && <th>Submission Date ↓</th>}
-                    {visibleCols.includes("createdDate") && <th>Created Date ↓</th>}
+                    <th>ACTION</th>
+                    {visibleCols.includes("no") && <th>NO.</th>}
+                    {visibleCols.includes("docNo") && <th>DOCUMENT NUMBER</th>}
+                    {visibleCols.includes("type") && <th>TYPE / SOURCE</th>}
+                    {visibleCols.includes("subTotal") && <th>SUB TOTAL</th>}
+                    {visibleCols.includes("taxAmount") && <th>TAX AMOUNT</th>}
+                    {visibleCols.includes("totalAmount") && <th>TOTAL AMOUNT (INCL TAX)</th>}
+                    {visibleCols.includes("dualStatus") && <th>INVOICENOW / IRAS STATUS</th>}
+                    {visibleCols.includes("status") && <th>STATUS</th>}
+                    {visibleCols.includes("outcome") && <th>OUTCOME</th>}
+                    {visibleCols.includes("docHash") && <th>DOC HASH</th>}
+                    {visibleCols.includes("gstTransId") && <th>GST INVOICENOW TRANS. ID</th>}
+                    {visibleCols.includes("peppolTransId") && <th>INVOICENOW / PEPPOL TRANS. ID</th>}
+                    {visibleCols.includes("acknowledgementId") && <th>ACKNOWLEDGEMENT ID</th>}
+                    {visibleCols.includes("filedDate") && <th>FILED DATE</th>}
+                    {visibleCols.includes("submissionDate") && <th>SUBMISSION DATE</th>}
+                    {visibleCols.includes("createdDate") && <th>CREATED DATE</th>}
                     <th className={styles.thArrow} />
                   </tr>
                 </thead>
@@ -695,14 +680,23 @@ export default function GSTInvoiceNowPage() {
                                 <div className={styles.panelActions} onClick={(e) => e.stopPropagation()}>
                                   <button
                                     type="button"
-                                    className={styles.btnPanelAction}
+                                    className={styles.btnView}
+                                    onClick={() => {
+                                      setSelectedDocNo(row.docNo);
+                                      setDocInfoDrawerOpen(true);
+                                    }}
+                                  >
+                                    <Icon icon="lucide:eye" width={14} /> View Details
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className={styles.btnEdit}
                                     onClick={() => {
                                       setSelectedRows([row.no]);
                                       setSendToIrasModalOpen(true);
                                     }}
                                   >
-                                    <Icon icon="lucide:send" width={14} />
-                                    Send to IRAS
+                                    <Icon icon="lucide:send" width={14} /> Send to IRAS
                                   </button>
                                 </div>
                               </div>

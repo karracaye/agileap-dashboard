@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
-import StatusCard from "@/components/StatusCard";
+import StatusSummarySection from "@/components/StatusSummarySection";
 import PaymentTable from "@/components/PaymentTable";
 import ImportModal from "@/components/ImportModal";
 import styles from "./page.module.css";
 import { Icon } from "@iconify/react";
 
 const PAYMENT_STATUS_CARDS = [
-  { id: "pending-approval", label: "Pending Approval", currency: "SGD", amount: "1,627.40", count: 5, icon: "lucide:clock-3", color: "#D97706", bgColor: "#FEF3C7" },
+  { id: "pending-approval", label: "Pending Approval", currency: "SGD", amount: "1,627.40", count: 5, icon: "lucide:clock-3", color: "#E8692A", bgColor: "#FFF0E8" },
   { id: "approved", label: "Approved", currency: "SGD", amount: "4,850.00", count: 5, icon: "lucide:check-circle-2", color: "#16A34A", bgColor: "#DCFCE7" },
   { id: "awaiting-payment", label: "Awaiting Payment", currency: "SGD", amount: "3,737,654.00", count: 22, icon: "lucide:hourglass", color: "#E8692A", bgColor: "#FFF0E8" },
 ];
@@ -52,24 +52,14 @@ export default function PaymentPage() {
             </div>
           </div>
 
-          {/* Status Cards Grid (Pending Approval, Approved, Awaiting Payment) */}
-          <div className={styles.cardsGrid} style={{ gridTemplateColumns: "repeat(3, minmax(220px, 300px))" }}>
-            {PAYMENT_STATUS_CARDS.map((card) => (
-              <StatusCard
-                key={card.id}
-                id={card.id}
-                label={card.label}
-                currency={card.currency}
-                amount={card.amount}
-                count={card.count}
-                color={card.color}
-                bgColor={card.bgColor}
-                active={activeCard === card.id}
-                onClick={() => setActiveCard(card.id)}
-                icon={card.icon}
-              />
-            ))}
-          </div>
+          {/* Status Cards / Listing Toggle (Pending Approval, Approved, Awaiting Payment) */}
+          <StatusSummarySection
+            cards={PAYMENT_STATUS_CARDS}
+            activeId={activeCard}
+            onSelect={(card) => setActiveCard(card.id)}
+            gridClassName={styles.cardsGrid}
+            gridStyle={{ gridTemplateColumns: "repeat(3, minmax(220px, 300px))" }}
+          />
 
           {/* Payment Table */}
           <PaymentTable />

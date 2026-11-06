@@ -6,7 +6,9 @@ import { Icon } from "@iconify/react";
 import styles from "./ActionButton.module.css";
 
 export interface ActionButtonProps {
-  type: "view" | "edit";
+  type?: "view" | "edit" | "print" | "delete" | "download" | "custom";
+  variant?: "primary" | "secondary" | "soft";
+  icon?: string;
   href?: string;
   onClick?: (e: React.MouseEvent) => void;
   tooltip?: string;
@@ -16,24 +18,60 @@ export interface ActionButtonProps {
 }
 
 export default function ActionButton({
-  type,
+  type = "view",
+  variant,
+  icon,
   href,
   onClick,
   tooltip,
-  size = 32,
-  iconSize = 16,
+  size = 28,
+  iconSize = 14,
   className = "",
 }: ActionButtonProps) {
-  const isView = type === "view";
-  const tooltipText = tooltip || (isView ? "View" : "Edit");
-  const iconName = isView ? "lucide:eye" : "lucide:square-pen";
+  let defaultIcon = "lucide:eye";
+  let defaultTooltip = "View";
+
+  if (type === "edit") {
+    defaultIcon = "lucide:square-pen";
+    defaultTooltip = "Edit";
+  } else if (type === "print") {
+    defaultIcon = "lucide:printer";
+    defaultTooltip = "Print";
+  } else if (type === "delete") {
+    defaultIcon = "lucide:trash-2";
+    defaultTooltip = "Delete";
+  } else if (type === "download") {
+    defaultIcon = "lucide:download";
+    defaultTooltip = "Download";
+  }
+
+  const iconName = icon || defaultIcon;
+  const tooltipText = tooltip || defaultTooltip;
+
+  // Determine button variant style
+  let styleClass = styles.viewBtn;
+  if (variant === "primary") {
+    styleClass = styles.primaryBtn;
+  } else if (variant === "soft") {
+    styleClass = styles.softBtn;
+  } else if (variant === "secondary") {
+    styleClass = styles.secondaryBtn;
+  } else if (type === "edit") {
+    styleClass = styles.primaryBtn;
+  } else if (type === "print") {
+    styleClass = styles.softBtn;
+  } else if (type === "delete") {
+    styleClass = styles.deleteBtn;
+  } else if (type === "view") {
+    styleClass = styles.viewBtn;
+  }
 
   const buttonStyle: React.CSSProperties = {
     width: `${size}px`,
     height: `${size}px`,
   };
 
-  const btnClass = `${styles.btn} ${isView ? styles.viewBtn : styles.editBtn} ${className}`;
+  const btnClass = `${styles.btn} ${styleClass} ${className}`;
 
   const content = (
     <Icon

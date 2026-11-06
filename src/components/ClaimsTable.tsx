@@ -219,23 +219,13 @@ export default function ClaimsTable({ claims, activeFilter = "all" }: ClaimsTabl
         </div>
 
         <div className={styles.toolbarRight}>
-          <button className={styles.actionBtn} onClick={() => alert("Exporting claims data...")}>
-            <Icon icon="lucide:download" width={14} />
-            Export
-          </button>
-
-          <button className={styles.actionBtn} onClick={() => alert("Filter options clicked")}>
-            <Icon icon="lucide:sliders-horizontal" width={14} />
-            Filter
-          </button>
-
           <div className={styles.pickerWrap}>
             <button
               className={`${styles.colBtn} ${pickerOpen ? styles.colBtnActive : ""}`}
               onClick={() => setPickerOpen((o) => !o)}
             >
-              <Icon icon="lucide:columns-2" width={14} />
-              Columns
+              <Icon icon="lucide:layout-grid" width={14} />
+              <span>Columns</span>
               <span className={styles.colBadge}>{visibleCols.length}</span>
               <Icon icon="lucide:chevron-down" width={12} />
             </button>
@@ -251,11 +241,21 @@ export default function ClaimsTable({ claims, activeFilter = "all" }: ClaimsTabl
 
           <div className={styles.divider} />
 
+          <button className={styles.actionBtn} onClick={() => alert("Filter options clicked")}>
+            <Icon icon="lucide:filter" width={14} />
+            <span>Filter</span>
+          </button>
+
+          <button className={styles.actionBtn} onClick={() => alert("Exporting claims data...")}>
+            <Icon icon="lucide:download" width={14} />
+            <span>Export</span>
+          </button>
+
           <div className={styles.searchBox}>
             <Icon icon="lucide:search" width={14} className={styles.searchIco} />
             <input
               className={styles.searchInput}
-              placeholder="Search by keywords..."
+              placeholder="Search by Claim No."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -280,29 +280,29 @@ export default function ClaimsTable({ claims, activeFilter = "all" }: ClaimsTabl
                     onChange={toggleAll}
                   />
                 </th>
-                <th className={styles.th}>Action</th>
-                {visibleCols.includes("claimNo") && <th className={styles.th}>Claim No. ↓</th>}
-                {visibleCols.includes("user") && <th className={styles.th}>User ↓</th>}
+                <th className={styles.th}>ACTION</th>
+                {visibleCols.includes("claimNo") && <th className={styles.th}>CLAIM NUMBER</th>}
+                {visibleCols.includes("user") && <th className={styles.th}>USER / CONTACT</th>}
                 {visibleCols.includes("totalAmount") && (
-                  <th className={`${styles.th} ${styles.thAmt}`}>Total Amount ↓</th>
+                  <th className={`${styles.th} ${styles.thAmt}`}>TOTAL AMOUNT</th>
                 )}
                 {visibleCols.includes("totalTax") && (
-                  <th className={`${styles.th} ${styles.thAmt}`}>Total Tax ↓</th>
+                  <th className={`${styles.th} ${styles.thAmt}`}>TOTAL TAX</th>
                 )}
                 {visibleCols.includes("totalClaim") && (
-                  <th className={`${styles.th} ${styles.thAmt}`}>Total Claim ↓</th>
+                  <th className={`${styles.th} ${styles.thAmt}`}>TOTAL CLAIM</th>
                 )}
                 {visibleCols.includes("paymentMethod") && (
-                  <th className={styles.th}>Payment Method ↓</th>
+                  <th className={styles.th}>PAYMENT METHOD</th>
                 )}
                 {visibleCols.includes("transactionDate") && (
-                  <th className={styles.th}>Transaction Date ↓</th>
+                  <th className={styles.th}>TRANSACTION DATE</th>
                 )}
-                {visibleCols.includes("status") && <th className={styles.th}>Status ↓</th>}
-                {visibleCols.includes("description") && <th className={styles.th}>Description ↓</th>}
-                {visibleCols.includes("createdDate") && <th className={styles.th}>Created Date ↓</th>}
+                {visibleCols.includes("status") && <th className={styles.th}>STATUS</th>}
+                {visibleCols.includes("description") && <th className={styles.th}>DESCRIPTION</th>}
+                {visibleCols.includes("createdDate") && <th className={styles.th}>CREATED DATE</th>}
                 {visibleCols.includes("lastModified") && (
-                  <th className={styles.th}>Last Modified ↑</th>
+                  <th className={styles.th}>LAST MODIFIED</th>
                 )}
                 <th className={styles.thArrow} />
               </tr>

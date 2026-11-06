@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./PaymentModal.module.css";
 import { Icon } from "@iconify/react";
+import ExitConfirmationModal from "./ExitConfirmationModal";
 
 export interface SelectedPaymentItem {
   id: string;
@@ -33,6 +34,7 @@ export default function PaymentModal({
   onConfirmPayment,
   mode = "full",
 }: PaymentModalProps) {
+  const [showExitModal, setShowExitModal] = useState(false);
   const [bankCollapsed, setBankCollapsed] = useState(false);
   const [detailsCollapsed, setDetailsCollapsed] = useState(false);
   const [attachCollapsed, setAttachCollapsed] = useState(false);
@@ -125,27 +127,37 @@ export default function PaymentModal({
     return rem.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
 
-  return (
-    <div className={styles.backdrop} onClick={onClose}>
-      <div className={styles.dialog} onClick={(e) => e.stopPropagation()}>
+  const handleAttemptClose = () => {
+    setShowExitModal(true);
+  };
 
-        {/* ── Modal Header ── */}
-        <div className={styles.header}>
-          <div className={styles.headerTitleGroup}>
-            <div className={styles.headerIconSlot}>
-              <Icon icon={isPartial ? "lucide:receipt" : "lucide:credit-card"} width={18} />
+  const handleConfirmClose = () => {
+    setShowExitModal(false);
+    onClose();
+  };
+
+  return (
+    <>
+      <div className={styles.backdrop} onClick={handleAttemptClose}>
+        <div className={styles.dialog} onClick={(e) => e.stopPropagation()}>
+
+          {/* ── Modal Header ── */}
+          <div className={styles.header}>
+            <div className={styles.headerTitleGroup}>
+              <div className={styles.headerIconSlot}>
+                <Icon icon={isPartial ? "lucide:receipt" : "lucide:credit-card"} width={18} />
+              </div>
+              <h2 className={styles.title}>{isPartial ? "Partial Payment" : "Payment"}</h2>
             </div>
-            <h2 className={styles.title}>{isPartial ? "Partial Payment" : "Payment"}</h2>
+            <div className={styles.headerActions}>
+              <button className={styles.btnMakePayment} onClick={onConfirmPayment}>
+                {isPartial ? "Make Partial Payment" : "Make Payment"}
+              </button>
+              <button className={styles.btnClose} onClick={handleAttemptClose}>
+                Close
+              </button>
+            </div>
           </div>
-          <div className={styles.headerActions}>
-            <button className={styles.btnMakePayment} onClick={onConfirmPayment}>
-              {isPartial ? "Make Partial Payment" : "Make Payment"}
-            </button>
-            <button className={styles.btnClose} onClick={onClose}>
-              Close
-            </button>
-          </div>
-        </div>
 
         {/* ── Scrollable Modal Body ── */}
         <div className={styles.body}>
@@ -520,5 +532,12 @@ export default function PaymentModal({
 
       </div>
     </div>
+
+    <ExitConfirmationModal
+      isOpen={showExitModal}
+      onConfirm={handleConfirmClose}
+      onCancel={() => setShowExitModal(false)}
+    />
+  </>
   );
 }

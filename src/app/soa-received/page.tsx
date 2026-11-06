@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
-import StatusCard from "@/components/StatusCard";
+import StatusSummarySection from "@/components/StatusSummarySection";
 import ImportModal from "@/components/ImportModal";
 import styles from "./page.module.css";
 import { Icon } from "@iconify/react";
@@ -51,13 +51,13 @@ const DEFAULT_VISIBLE: ColKey[] = [
 ];
 
 const SOA_CARDS = [
-  { id: "my-history", label: "My History", currency: "SGD", amount: "565.55", count: 6, icon: "lucide:history", color: "#475569", bgColor: "#F1F5F9" },
-  { id: "all", label: "All", currency: "SGD", amount: "565.55", count: 6, icon: "lucide:list", color: "#E8692A", bgColor: "#FFF0E8" },
-  { id: "duplicated", label: "Duplicated", currency: "SGD", amount: "20.00", count: 2, icon: "lucide:copy", color: "#D97706", bgColor: "#FEF3C7" },
+  { id: "my-history", label: "My History", currency: "SGD", amount: "565.55", count: 6, icon: "lucide:history", color: "#16A34A", bgColor: "#DCFCE7" },
+  { id: "all", label: "All", currency: "SGD", amount: "565.55", count: 6, icon: "lucide:list", color: "#16A34A", bgColor: "#DCFCE7" },
+  { id: "duplicated", label: "Duplicated", currency: "SGD", amount: "20.00", count: 2, icon: "lucide:copy", color: "#E8692A", bgColor: "#FFF0E8" },
   { id: "submitted", label: "Submitted", currency: "SGD", amount: "565.55", count: 3, icon: "lucide:send", color: "#16A34A", bgColor: "#DCFCE7" },
-  { id: "draft", label: "Draft", currency: "SGD", amount: "0.00", count: 3, icon: "lucide:file-text", color: "#2563EB", bgColor: "#EFF6FF" },
-  { id: "cancelled", label: "Cancelled", currency: "SGD", amount: "0.00", count: 0, icon: "lucide:ban", color: "#EA580C", bgColor: "#FFEDD5" },
-  { id: "rejected", label: "Rejected", currency: "SGD", amount: "0.00", count: 0, icon: "lucide:x-circle", color: "#DC2626", bgColor: "#FEE2E2" },
+  { id: "draft", label: "Draft", currency: "SGD", amount: "0.00", count: 3, icon: "lucide:file-text", color: "#16A34A", bgColor: "#DCFCE7" },
+  { id: "cancelled", label: "Cancelled", currency: "SGD", amount: "0.00", count: 0, icon: "lucide:ban", color: "#16A34A", bgColor: "#DCFCE7" },
+  { id: "rejected", label: "Rejected", currency: "SGD", amount: "0.00", count: 0, icon: "lucide:x-circle", color: "#E8692A", bgColor: "#FFF0E8" },
 ];
 
 const INITIAL_ROWS: SoaRow[] = [
@@ -283,24 +283,13 @@ export default function SoaReceivedPage() {
 
           <ImportModal isOpen={importOpen} onClose={() => setImportOpen(false)} />
 
-          {/* Metric Status Cards Grid (Matching Bills To Pay Home Page) */}
-          <div className={styles.cardsGrid}>
-            {SOA_CARDS.map((card) => (
-              <StatusCard
-                key={card.id}
-                id={card.id}
-                label={card.label}
-                currency={card.currency}
-                amount={card.amount}
-                count={card.count}
-                color={card.color}
-                bgColor={card.bgColor}
-                active={activeCard === card.id}
-                onClick={() => setActiveCard(card.id)}
-                icon={card.icon}
-              />
-            ))}
-          </div>
+          {/* Metric Status Cards / Listing Toggle */}
+          <StatusSummarySection
+            cards={SOA_CARDS}
+            activeId={activeCard}
+            onSelect={(card) => setActiveCard(card.id)}
+            gridClassName={styles.cardsGrid}
+          />
 
           {/* Table Container & Toolbar (Matching InvoiceTable.tsx) */}
           <div className={styles.wrap}>
@@ -318,9 +307,10 @@ export default function SoaReceivedPage() {
                     className={`${styles.colBtn} ${pickerOpen ? styles.colBtnActive : ""}`}
                     onClick={() => setPickerOpen(o => !o)}
                   >
-                    <Icon icon="lucide:columns-2" width={14} />
-                    Columns
+                    <Icon icon="lucide:layout-grid" width={14} />
+                    <span>Columns</span>
                     <span className={styles.colBadge}>{visibleCols.length}</span>
+                    <Icon icon="lucide:chevron-down" width={12} />
                   </button>
 
                   {pickerOpen && (
@@ -339,8 +329,8 @@ export default function SoaReceivedPage() {
                   className={`${styles.filterBtn} ${filterOpen ? styles.filterBtnActive : ""}`}
                   onClick={() => setFilterOpen(f => !f)}
                 >
-                  <Icon icon="lucide:sliders-horizontal" width={14} />
-                  Filter
+                  <Icon icon="lucide:filter" width={14} />
+                  <span>Filter</span>
                 </button>
 
                 {/* Search Box */}
@@ -371,16 +361,16 @@ export default function SoaReceivedPage() {
                           onChange={toggleAll}
                         />
                       </th>
-                      <th className={styles.th}>Action</th>
-                      {visibleCols.includes("soaRef") && <th className={styles.th}>SOA Ref No. ↓</th>}
-                      {visibleCols.includes("date") && <th className={styles.th}>Date ↓</th>}
-                      {visibleCols.includes("company") && <th className={styles.th}>Company ↓</th>}
-                      {visibleCols.includes("status") && <th className={styles.th}>Status ↓</th>}
-                      {visibleCols.includes("totalSum") && <th className={`${styles.th} ${styles.thAmt}`}>Total Sum ↓</th>}
-                      {visibleCols.includes("totalPaid") && <th className={`${styles.th} ${styles.thAmt}`}>Total Paid ↓</th>}
-                      {visibleCols.includes("totalDue") && <th className={`${styles.th} ${styles.thAmt}`}>Total Due ↓</th>}
-                      {visibleCols.includes("createdDate") && <th className={styles.th}>Created Date ↓</th>}
-                      {visibleCols.includes("lastModified") && <th className={styles.th}>Last Modified ↓</th>}
+                      <th className={styles.th}>ACTION</th>
+                      {visibleCols.includes("soaRef") && <th className={styles.th}>SOA REF NO.</th>}
+                      {visibleCols.includes("date") && <th className={styles.th}>DATE</th>}
+                      {visibleCols.includes("company") && <th className={styles.th}>COMPANY</th>}
+                      {visibleCols.includes("status") && <th className={styles.th}>STATUS</th>}
+                      {visibleCols.includes("totalSum") && <th className={`${styles.th} ${styles.thAmt}`}>TOTAL SUM</th>}
+                      {visibleCols.includes("totalPaid") && <th className={`${styles.th} ${styles.thAmt}`}>TOTAL PAID</th>}
+                      {visibleCols.includes("totalDue") && <th className={`${styles.th} ${styles.thAmt}`}>TOTAL DUE</th>}
+                      {visibleCols.includes("createdDate") && <th className={styles.th}>CREATED DATE</th>}
+                      {visibleCols.includes("lastModified") && <th className={styles.th}>LAST MODIFIED</th>}
                       <th className={styles.thArrow} />
                     </tr>
                   </thead>
@@ -491,7 +481,10 @@ export default function SoaReceivedPage() {
                                       <Link href="/bills-to-pay/review" className={styles.btnView}>
                                         <Icon icon="lucide:eye" width={14} /> View Details
                                       </Link>
-                                      <button className={styles.btnEdit}>
+                                      <button
+                                        className={styles.btnEdit}
+                                        onClick={() => alert(`Editing ${r.soaRefNo}`)}
+                                      >
                                         <Icon icon="lucide:file-pen" width={14} /> Edit
                                       </button>
                                     </div>

@@ -529,15 +529,15 @@ export default function PaymentTable() {
             <div className={styles.divider} />
 
             <button className={styles.filterBtn}>
-              <Icon icon="lucide:sliders-horizontal" width={14} />
-              Filter
+              <Icon icon="lucide:filter" width={14} />
+              <span>Filter</span>
             </button>
 
             <div className={styles.searchBox}>
               <Icon icon="lucide:search" width={14} className={styles.searchIco} />
               <input
                 className={styles.searchInput}
-                placeholder="Search by keywords..."
+                placeholder="Search by Transaction No."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
               />
@@ -564,8 +564,7 @@ export default function PaymentTable() {
                     return (
                       <th key={key} className={styles.th}>
                         <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-                          {col.label}
-                          {col.key !== "no" && <Icon icon="lucide:arrow-down" width={12} />}
+                          {col.label.toUpperCase()}
                         </span>
                       </th>
                     );

@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import ExitConfirmationModal from "@/components/ExitConfirmationModal";
 import styles from "./page.module.css";
 import { Icon } from "@iconify/react";
 
@@ -22,7 +24,112 @@ interface LineItem {
   taxAmount: number;
 }
 
+export interface AttachmentFile {
+  id: string;
+  name: string;
+  size: string;
+  type: "excel" | "word" | "pdf" | "image" | "other";
+  uploadDate: string;
+}
+
+const VENDOR_LOOKUP: Record<string, {
+  companyCode: string;
+  companyName: string;
+  businessRegNo: string;
+  taxRegNo: string;
+  peppolId: string;
+  address: string;
+  country: string;
+  postalCode: string;
+  companyEmail: string;
+  contactNo: string;
+}> = {
+  "IMDADEMO021": {
+    companyCode: "-",
+    companyName: "IMDADEMO021",
+    businessRegNo: "200003528M1",
+    taxRegNo: "200003528M1",
+    peppolId: "0195:SGTSTIMDADEMO021",
+    address: "IMDA Address",
+    country: "Singapore",
+    postalCode: "674778",
+    companyEmail: "-",
+    contactNo: "-",
+  },
+  "CMH PTE LTD": {
+    companyCode: "CMH1",
+    companyName: "CMH PTE LTD",
+    businessRegNo: "202537518H",
+    taxRegNo: "202537518H",
+    peppolId: "0195:SGUEN202112298N",
+    address: "24 Sin Ming Lane, Midview City",
+    country: "Singapore",
+    postalCode: "535133",
+    companyEmail: "-",
+    contactNo: "-",
+  },
+  "Global Tech Pte Ltd": {
+    companyCode: "GT01",
+    companyName: "Global Tech Pte Ltd",
+    businessRegNo: "201823901K",
+    taxRegNo: "201823901K",
+    peppolId: "0195:SGUEN201823901K",
+    address: "10 Changi South Lane",
+    country: "Singapore",
+    postalCode: "486162",
+    companyEmail: "info@globaltech.sg",
+    contactNo: "+65 6789 0123",
+  },
+  "BW LNG": {
+    companyCode: "BW02",
+    companyName: "BW LNG Pte Ltd",
+    businessRegNo: "201934812G",
+    taxRegNo: "201934812G",
+    peppolId: "0195:SGUEN201934812G",
+    address: "10 Pasir Panjang Rd, Mapletree Business City",
+    country: "Singapore",
+    postalCode: "117438",
+    companyEmail: "billing@bwlng.com",
+    contactNo: "+65 6337 2000",
+  },
+};
+
+const CONTACT_LOOKUP: Record<string, {
+  contactName: string;
+  email: string;
+  phoneNo: string;
+}> = {
+  "Alan Teo (junior@activants.com)": {
+    contactName: "Alan Teo",
+    email: "junior@activants.com",
+    phoneNo: "-",
+  },
+  "IMDA TESTER BUYER (junior+1@activants.com)": {
+    contactName: "IMDA TESTER BUYER",
+    email: "junior+1@activants.com",
+    phoneNo: "-",
+  },
+  "John Tan (john@globaltech.sg)": {
+    contactName: "John Tan",
+    email: "john@globaltech.sg",
+    phoneNo: "+65 9123 4567",
+  },
+};
+
 export default function CreateBillPage() {
+  const router = useRouter();
+  const [showExitModal, setShowExitModal] = useState(false);
+  const [exitTarget, setExitTarget] = useState("/");
+
+  const handleRequestExit = (targetUrl: string = "/") => {
+    setExitTarget(targetUrl);
+    setShowExitModal(true);
+  };
+
+  const handleConfirmExit = () => {
+    setShowExitModal(false);
+    router.push(exitTarget);
+  };
   // Collapsible Sections
   const [vendorCollapsed, setVendorCollapsed] = useState(false);
   const [additionalCollapsed, setAdditionalCollapsed] = useState(false);
@@ -34,9 +141,73 @@ export default function CreateBillPage() {
   // Line items view mode: "dropdown" vs "table"
   const [viewMode, setViewMode] = useState<"dropdown" | "table">("dropdown");
 
+  // Attachments State (Matching UAT2 Screenshot)
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [attachments, setAttachments] = useState<AttachmentFile[]>([
+    {
+      id: "1",
+      name: "AR-Inline-Document-Number_UAT2_20261026.xlsx",
+      size: "45 KB",
+      type: "excel",
+      uploadDate: "2026-10-26",
+    },
+    {
+      id: "2",
+      name: "AgileAP_Numbering_Requirements.docx",
+      size: "128 KB",
+      type: "word",
+      uploadDate: "2026-10-26",
+    },
+  ]);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const newFiles: AttachmentFile[] = Array.from(e.target.files).map((f) => {
+        let ftype: "excel" | "word" | "pdf" | "image" | "other" = "other";
+        if (f.name.endsWith(".xlsx") || f.name.endsWith(".xls") || f.name.endsWith(".csv")) ftype = "excel";
+        else if (f.name.endsWith(".docx") || f.name.endsWith(".doc")) ftype = "word";
+        else if (f.name.endsWith(".pdf")) ftype = "pdf";
+        else if (f.name.match(/\.(jpg|jpeg|png|webp|gif)$/i)) ftype = "image";
+
+        const sizeKb = Math.round(f.size / 1024);
+        return {
+          id: `file_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+          name: f.name,
+          size: sizeKb > 1024 ? `${(sizeKb / 1024).toFixed(1)} MB` : `${sizeKb || 1} KB`,
+          type: ftype,
+          uploadDate: new Date().toISOString().split("T")[0],
+        };
+      });
+      setAttachments((prev) => [...prev, ...newFiles]);
+      // Reset input value so same file can be re-uploaded if desired
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  const handleRemoveAttachment = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setAttachments((prev) => prev.filter((a) => a.id !== id));
+  };
+
+  const getFileIcon = (file: AttachmentFile) => {
+    switch (file.type) {
+      case "excel":
+        return <Icon icon="lucide:file-spreadsheet" width={17} className={styles.attachmentIconOrange} />;
+      case "word":
+        return <Icon icon="lucide:file-text" width={17} className={styles.attachmentIconOrange} />;
+      case "pdf":
+        return <Icon icon="lucide:file-check-2" width={17} className={styles.attachmentIconOrange} />;
+      case "image":
+        return <Icon icon="lucide:image" width={17} className={styles.attachmentIconOrange} />;
+      default:
+        return <Icon icon="lucide:file" width={17} className={styles.attachmentIconOrange} />;
+    }
+  };
+
   // Form Fields State
-  const [vendor, setVendor] = useState("");
-  const [contactPerson, setContactPerson] = useState("");
+  const [vendor, setVendor] = useState("IMDADEMO021");
+  const [contactPerson, setContactPerson] = useState("Alan Teo (junior@activants.com)");
+  const [showMoreVendorDetails, setShowMoreVendorDetails] = useState(false);
   const [vendorRef, setVendorRef] = useState("");
   const [contractNo, setContractNo] = useState("");
   const [budget, setBudget] = useState("");
@@ -142,7 +313,16 @@ export default function CreateBillPage() {
           {/* Breadcrumb Navigation */}
           <div className={styles.breadcrumb}>
             <Icon icon="lucide:home" width={14} />
-            <Link href="/" className={styles.breadcrumbLink}>Bills To Pay</Link>
+            <Link
+              href="/"
+              className={styles.breadcrumbLink}
+              onClick={(e) => {
+                e.preventDefault();
+                handleRequestExit("/");
+              }}
+            >
+              Bills To Pay
+            </Link>
             <span>&gt;</span>
             <span className={styles.breadcrumbActive}>Create Bill</span>
           </div>
@@ -160,9 +340,13 @@ export default function CreateBillPage() {
             <div className={styles.actions}>
               <button className={styles.btnSecondary}>Save as Draft</button>
               <button className={styles.btnPrimary}>Save and Continue</button>
-              <Link href="/" className={styles.btnIconButton} title="Back to Bills To Pay">
-                <Icon icon="lucide:chevron-left" width={18} />
-              </Link>
+              <button
+                type="button"
+                className={styles.btnSecondary}
+                onClick={() => handleRequestExit("/")}
+              >
+                Back
+              </button>
             </div>
           </div>
 
@@ -179,31 +363,117 @@ export default function CreateBillPage() {
             </div>
             {!vendorCollapsed && (
               <div className={styles.sectionBody}>
-                <div className={styles.formGrid}>
-                  <div className={styles.formRow}>
-                    <label className={styles.label}>Vendor<span className={styles.reqStar}>*</span></label>
-                    <select className={styles.select} value={vendor} onChange={(e) => setVendor(e.target.value)}>
-                      <option value="" disabled>Type to search</option>
-                      <option value="CMH PTE LTD">CMH PTE LTD (CMH1)</option>
-                      <option value="Global Tech Pte Ltd">Global Tech Pte Ltd</option>
-                      <option value="BW LNG">BW LNG</option>
-                    </select>
-                  </div>
+                {(() => {
+                  const selectedVendorData = VENDOR_LOOKUP[vendor];
+                  const selectedContactData = CONTACT_LOOKUP[contactPerson];
 
-                  <div className={styles.formRow}>
-                    <label className={styles.label}>Contact Person<span className={styles.reqStar}>*</span></label>
-                    <select className={styles.select} value={contactPerson} onChange={(e) => setContactPerson(e.target.value)}>
-                      <option value="" disabled>Type to search</option>
-                      <option value="IMDA TESTER BUYER">IMDA TESTER BUYER (junior+1@activants.com)</option>
-                      <option value="John Tan">John Tan (john@globaltech.sg)</option>
-                    </select>
-                  </div>
+                  return (
+                    <div className={styles.formGrid}>
+                      <div className={styles.formRow}>
+                        <label className={styles.label}>Vendor<span className={styles.reqStar}>*</span></label>
+                        <select className={styles.select} value={vendor} onChange={(e) => setVendor(e.target.value)}>
+                          <option value="" disabled>Type to search</option>
+                          <option value="IMDADEMO021">IMDADEMO021</option>
+                          <option value="CMH PTE LTD">CMH PTE LTD (CMH1)</option>
+                          <option value="Global Tech Pte Ltd">Global Tech Pte Ltd</option>
+                          <option value="BW LNG">BW LNG</option>
+                        </select>
 
-                  <div className={styles.formRow} style={{ gridColumn: "1 / -1" }}>
-                    <label className={styles.label}>Vendor Reference ⓘ</label>
-                    <input type="text" className={styles.input} placeholder="Vendor reference..." value={vendorRef} onChange={(e) => setVendorRef(e.target.value)} />
-                  </div>
-                </div>
+                        {selectedVendorData && (
+                          <div className={styles.metadataPanel}>
+                            <div className={styles.metadataHeader}>
+                              <span className={styles.metadataSubheading}>Company Details</span>
+                              <button
+                                type="button"
+                                className={styles.metadataToggleBtn}
+                                onClick={() => setShowMoreVendorDetails(!showMoreVendorDetails)}
+                              >
+                                {showMoreVendorDetails ? "Less details ▲" : "More details ▼"}
+                              </button>
+                            </div>
+                            <div className={styles.metadataList}>
+                              <div className={styles.metadataItem}>
+                                <span className={styles.metadataLabel}>Tax / UEN No.:</span>
+                                <span className={`${styles.metadataValue} ${styles.monoValue}`}>{selectedVendorData.taxRegNo}</span>
+                              </div>
+                              <div className={styles.metadataItem}>
+                                <span className={styles.metadataLabel}>Peppol ID:</span>
+                                <span className={`${styles.metadataValue} ${styles.monoValue}`}>{selectedVendorData.peppolId}</span>
+                              </div>
+                              <div className={styles.metadataItem}>
+                                <span className={styles.metadataLabel}>Address:</span>
+                                <span className={styles.metadataValue}>
+                                  {selectedVendorData.address}{selectedVendorData.postalCode ? `, ${selectedVendorData.country} ${selectedVendorData.postalCode}` : ""}
+                                </span>
+                              </div>
+                              {showMoreVendorDetails && (
+                                <>
+                                  <div className={styles.metadataItem}>
+                                    <span className={styles.metadataLabel}>Company Code:</span>
+                                    <span className={selectedVendorData.companyCode !== "-" ? styles.metadataValue : styles.mutedEmpty}>
+                                      {selectedVendorData.companyCode}
+                                    </span>
+                                  </div>
+                                  <div className={styles.metadataItem}>
+                                    <span className={styles.metadataLabel}>Company Email:</span>
+                                    <span className={selectedVendorData.companyEmail !== "-" ? styles.metadataValue : styles.mutedEmpty}>
+                                      {selectedVendorData.companyEmail}
+                                    </span>
+                                  </div>
+                                  <div className={styles.metadataItem}>
+                                    <span className={styles.metadataLabel}>Contact No.:</span>
+                                    <span className={selectedVendorData.contactNo !== "-" ? styles.metadataValue : styles.mutedEmpty}>
+                                      {selectedVendorData.contactNo}
+                                    </span>
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className={styles.formRow}>
+                        <label className={styles.label}>Contact Person<span className={styles.reqStar}>*</span></label>
+                        <select className={styles.select} value={contactPerson} onChange={(e) => setContactPerson(e.target.value)}>
+                          <option value="" disabled>Type to search</option>
+                          <option value="Alan Teo (junior@activants.com)">Alan Teo (junior@activants.com)</option>
+                          <option value="IMDA TESTER BUYER (junior+1@activants.com)">IMDA TESTER BUYER (junior+1@activants.com)</option>
+                          <option value="John Tan (john@globaltech.sg)">John Tan (john@globaltech.sg)</option>
+                        </select>
+
+                        {selectedContactData && (
+                          <div className={styles.metadataPanel}>
+                            <div className={styles.metadataHeader}>
+                              <span className={styles.metadataSubheading}>Contact Person</span>
+                            </div>
+                            <div className={styles.metadataList}>
+                              <div className={styles.metadataItem}>
+                                <span className={styles.metadataLabel}>Contact Name:</span>
+                                <span className={styles.metadataValue}>{selectedContactData.contactName}</span>
+                              </div>
+                              <div className={styles.metadataItem}>
+                                <span className={styles.metadataLabel}>Email:</span>
+                                <span className={styles.metadataValue}>{selectedContactData.email}</span>
+                              </div>
+                              <div className={styles.metadataItem}>
+                                <span className={styles.metadataLabel}>Phone No.:</span>
+                                <span className={selectedContactData.phoneNo !== "-" ? styles.metadataValue : styles.mutedEmpty}>
+                                  {selectedContactData.phoneNo}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className={styles.formRow} style={{ gridColumn: "1 / -1" }}>
+                        <label className={styles.label}>Vendor Reference ⓘ</label>
+                        <input type="text" className={styles.input} placeholder="Vendor reference..." value={vendorRef} onChange={(e) => setVendorRef(e.target.value)} />
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
             )}
           </div>
@@ -392,12 +662,70 @@ export default function CreateBillPage() {
             </div>
             {!attachCollapsed && (
               <div className={styles.sectionBody}>
-                <div className={styles.uploadBox}>
+                {/* Hidden File Input */}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                  multiple
+                  onChange={handleFileUpload}
+                />
+
+                {/* Dropzone Upload Button */}
+                <div
+                  className={styles.uploadBox}
+                  onClick={() => fileInputRef.current?.click()}
+                  title="Click to browse and upload files"
+                >
                   <Icon icon="lucide:cloud-upload" width={28} style={{ color: "#E8692A" }} />
                   <p className={styles.uploadText}>
                     Click here to <span className={styles.uploadHighlight}>upload</span> your file.
                   </p>
                 </div>
+
+                {/* Uploaded Attachments List (Matching UAT2 Screenshot) */}
+                {attachments.length > 0 && (
+                  <div className={styles.attachmentContainer}>
+                    <div className={styles.attachmentList}>
+                      {attachments.map((file) => (
+                        <div
+                          key={file.id}
+                          className={styles.attachmentCard}
+                          title={file.name}
+                        >
+                          <div className={styles.attachmentIconBox}>
+                            {getFileIcon(file)}
+                          </div>
+                          <div className={styles.attachmentInfo}>
+                            <span className={styles.attachmentName}>{file.name}</span>
+                            <span className={styles.attachmentMeta}>({file.size})</span>
+                          </div>
+                          <div className={styles.attachmentActions}>
+                            <button
+                              type="button"
+                              className={styles.attachmentActionBtn}
+                              title="Download"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                alert(`Downloading ${file.name}...`);
+                              }}
+                            >
+                              <Icon icon="lucide:download" width={14} />
+                            </button>
+                            <button
+                              type="button"
+                              className={styles.attachmentDeleteBtn}
+                              title="Remove attachment"
+                              onClick={(e) => handleRemoveAttachment(file.id, e)}
+                            >
+                              <Icon icon="lucide:x" width={14} />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -527,6 +855,12 @@ export default function CreateBillPage() {
 
         </main>
       </div>
+
+      <ExitConfirmationModal
+        isOpen={showExitModal}
+        onConfirm={handleConfirmExit}
+        onCancel={() => setShowExitModal(false)}
+      />
     </div>
   );
 }

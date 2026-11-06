@@ -114,8 +114,8 @@
 }
 
 .card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 12px;
   padding: 14px 16px;
   display: flex;
@@ -129,13 +129,16 @@
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-color: #CBD5E1;
+  background: #FFFFFF;
 }
 
 .cardActive {
-  border-color: #e8692a !important;
-  box-shadow: 0 0 0 2px rgba(232, 105, 42, 0.2) !important;
+  border: 1.5px solid color-mix(in srgb, var(--accent, #E8692A) 60%, #FFFFFF) !important;
+  border-bottom: 3.5px solid var(--accent, #E8692A) !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06) !important;
 }
 
 .cardTop {
@@ -154,8 +157,8 @@
 }
 
 .cardDocCount {
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 15.5px;
+  font-weight: 700;
   color: #64748b;
 }
 
@@ -330,22 +333,45 @@
 }
 
 .colBtn {
-  composes: btnSecondary;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: white;
+  border: 1px solid var(--border, #E2E8F0);
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-secondary, #64748B);
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 
-.colBtn:hover, .colBtnActive {
-  background-color: #fff3ee;
-  border-color: #e8692a;
-  color: #e8692a;
+.colBtn:hover {
+  border-color: var(--brand-orange, #E8692A);
+  color: var(--brand-orange, #E8692A);
+}
+
+.colBtnActive {
+  border-color: var(--brand-orange, #E8692A) !important;
+  color: var(--brand-orange, #E8692A) !important;
+  background: var(--active-bg, #FFF6F3) !important;
 }
 
 .colBadge {
-  background-color: #f1f5f9;
-  color: #334155;
-  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 99px;
+  background: var(--brand-orange, #E8692A);
+  color: white;
+  font-size: 10.5px;
   font-weight: 700;
-  padding: 1px 6px;
-  border-radius: 10px;
+  line-height: 1;
 }
 
 /* Column Picker Popover Card */
@@ -598,7 +624,7 @@
 }
 
 .rowExp {
-  background-color: #fff9f7 !important;
+  background-color: #FFF8F5 !important;
 }
 
 .tdArrow {
@@ -637,7 +663,7 @@
 
 .expandTd {
   padding: 0 !important;
-  background: #fdfaf8;
+  background: #FFF8F5;
   border-bottom: 1px solid #e2e8f0;
   white-space: normal !important;
 }
@@ -659,6 +685,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 32px;
+  background: #FFF8F5;
   white-space: normal !important;
 }
 
@@ -682,10 +709,10 @@
 }
 
 .chipLabel {
-  font-size: 11px;
-  font-weight: 700;
-  color: #475569;
-  letter-spacing: 0.04em;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #0F172A;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
@@ -711,6 +738,54 @@
   flex-direction: column;
   gap: 8px;
   flex-shrink: 0;
+  align-self: center;
+}
+
+.btnView {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border: 1.5px solid #CBD5E0;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+  background: white;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  white-space: nowrap;
+  min-width: 110px;
+  justify-content: center;
+}
+.btnView:hover {
+  border-color: #718096;
+  color: #0F172A;
+  background: #F8FAFC;
+}
+
+.btnEdit {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border: 1.5px solid var(--brand-orange, #E8692A);
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: white;
+  background: var(--brand-orange, #E8692A);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  white-space: nowrap;
+  min-width: 110px;
+  justify-content: center;
+}
+.btnEdit:hover {
+  background: #D95A1B;
+  border-color: #D95A1B;
 }
 
 .btnPanelAction {

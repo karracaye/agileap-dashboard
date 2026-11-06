@@ -429,7 +429,7 @@
 
 .expandTd {
   padding: 0;
-  background: #FDFAF8;
+  background: #FFF8F5;
   border-bottom: 1px solid var(--border, #E8ECF0);
 }
 
@@ -482,6 +482,7 @@
 
 .panelActions {
   display: flex;
+  flex-direction: column;
   gap: 8px;
   flex-shrink: 0;
   align-self: center;
@@ -490,38 +491,48 @@
 .btnView {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border: 1px solid var(--border, #E8ECF0);
+  gap: 7px;
+  padding: 8px 18px;
+  border: 1.5px solid var(--border, #E8ECF0);
   border-radius: 8px;
   font-size: 12.5px;
   font-weight: 600;
-  color: #475569;
+  color: var(--text-secondary, #718096);
   background: white;
   cursor: pointer;
+  font-family: inherit;
   transition: all 0.15s;
+  white-space: nowrap;
+  min-width: 110px;
+  justify-content: center;
 }
 .btnView:hover {
-  background: #F8FAFC;
-  color: #0F172A;
+  border-color: var(--text-secondary, #718096);
+  color: var(--text-primary, #2D3748);
+  background: #F7FAFC;
 }
 
 .btnEdit {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border: 1px solid #E8692A;
+  gap: 7px;
+  padding: 8px 18px;
+  border: 1.5px solid var(--brand-orange, #E8692A);
   border-radius: 8px;
   font-size: 12.5px;
   font-weight: 600;
   color: white;
-  background: #E8692A;
+  background: var(--brand-orange, #E8692A);
   cursor: pointer;
+  font-family: inherit;
   transition: all 0.15s;
+  white-space: nowrap;
+  min-width: 110px;
+  justify-content: center;
 }
 .btnEdit:hover {
   background: #D95A1B;
+  border-color: #D95A1B;
 }
 
 .empty {

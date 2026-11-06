@@ -64,7 +64,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 9px;
   cursor: pointer;
   outline: none;
   text-decoration: none;
@@ -73,31 +73,64 @@
   box-sizing: border-box;
 }
 
-/* ─── View Button Style ──────────────────────────────────── */
-.viewBtn {
+/* ─── 1. View Button (White Card + Slate Gray Icon) ────────── */
+.viewBtn,
+.secondaryBtn {
   background-color: #FFFFFF;
-  border: 1px solid #D0D5DD;
-  color: #555555;
+  border: 1px solid #CBD5E1;
+  color: #334155;
   box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
 }
 
-.viewBtn:hover {
+.viewBtn:hover,
+.secondaryBtn:hover {
   background-color: #F8FAFC;
   border-color: #94A3B8;
-  color: #1E293B;
+  color: #0F172A;
   box-shadow: 0 2px 4px rgba(16, 24, 40, 0.08);
 }
 
-/* ─── Edit Button Style ──────────────────────────────────── */
-.editBtn {
+/* ─── 2. Edit Button (Primary Solid Orange + White Icon) ───── */
+.editBtn,
+.primaryBtn {
   background-color: var(--brand-orange, #E8692A);
   border: 1px solid var(--brand-orange, #E8692A);
   color: #FFFFFF;
-  box-shadow: 0 1px 3px rgba(232, 105, 42, 0.25);
+  box-shadow: 0 2px 4px rgba(232, 105, 42, 0.22);
 }
 
-.editBtn:hover {
+.editBtn:hover,
+.primaryBtn:hover {
   background-color: #D55A1D;
   border-color: #D55A1D;
+  color: #FFFFFF;
   box-shadow: 0 3px 6px rgba(213, 90, 29, 0.35);
+}
+
+/* ─── 3. Print Button (Soft Light Orange Tint + Orange Icon) ─ */
+.softBtn {
+  background-color: #FFF0E8;
+  border: 1px solid #FFE4D6;
+  color: var(--brand-orange, #E8692A);
+}
+
+.softBtn:hover {
+  background-color: #FFE5D6;
+  border-color: #FFD0B8;
+  color: #D55A1D;
+}
+
+/* ─── 4. Delete Button (Soft Light Red Tint + Red Icon) ─────── */
+.deleteBtn,
+.softRedBtn {
+  background-color: #FEF2F2;
+  border: 1px solid #FEE2E2;
+  color: #DC2626;
+}
+
+.deleteBtn:hover,
+.softRedBtn:hover {
+  background-color: #DC2626;
+  border-color: #DC2626;
+  color: #FFFFFF;
 }

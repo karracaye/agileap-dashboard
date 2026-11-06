@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./AddStaffModal.module.css";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import ExitConfirmationModal from "./ExitConfirmationModal";
 
 export interface StaffFormData {
   id?: string;
@@ -33,6 +34,7 @@ export default function AddStaffModal({
   initialData,
 }: AddStaffModalProps) {
   const isEditing = Boolean(initialData && initialData.staffCode);
+  const [showExitModal, setShowExitModal] = useState(false);
 
   const [staffCode, setStaffCode] = useState("");
   const [staffName, setStaffName] = useState("");
@@ -75,6 +77,15 @@ export default function AddStaffModal({
 
   if (!isOpen) return null;
 
+  const handleAttemptClose = () => {
+    setShowExitModal(true);
+  };
+
+  const handleConfirmClose = () => {
+    setShowExitModal(false);
+    onClose();
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!staffCode.trim() || !staffName.trim()) return;
@@ -101,24 +112,25 @@ export default function AddStaffModal({
   };
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
-        {/* Modal Header */}
-        <div className={styles.modalHeader}>
-          <div className={styles.titleGroup}>
-            <h2 className={styles.modalTitle}>
-              {isEditing ? "Edit Staff" : "Add Staff"}
-            </h2>
-            {isEditing && (
-              <span className={styles.modalSub}>
-                {staffCode} · {staffName}
-              </span>
-            )}
+    <>
+      <div className={styles.overlay} onClick={handleAttemptClose}>
+        <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
+          {/* Modal Header */}
+          <div className={styles.modalHeader}>
+            <div className={styles.titleGroup}>
+              <h2 className={styles.modalTitle}>
+                {isEditing ? "Edit Staff" : "Add Staff"}
+              </h2>
+              {isEditing && (
+                <span className={styles.modalSub}>
+                  {staffCode} · {staffName}
+                </span>
+              )}
+            </div>
+            <button className={styles.btnClose} onClick={handleAttemptClose} aria-label="Close modal">
+              <Icon icon="lucide:x" width={18} />
+            </button>
           </div>
-          <button className={styles.btnClose} onClick={onClose} aria-label="Close modal">
-            <Icon icon="lucide:x" width={18} />
-          </button>
-        </div>
 
         {/* Form Body */}
         <form onSubmit={handleSubmit}>
@@ -340,7 +352,7 @@ export default function AddStaffModal({
 
           {/* Modal Footer */}
           <div className={styles.modalFooter}>
-            <button type="button" className={styles.btnCancel} onClick={onClose}>
+            <button type="button" className={styles.btnCancel} onClick={handleAttemptClose}>
               Cancel
             </button>
             <button type="submit" className={styles.btnSubmit}>
@@ -350,5 +362,12 @@ export default function AddStaffModal({
         </form>
       </div>
     </div>
+
+    <ExitConfirmationModal
+      isOpen={showExitModal}
+      onConfirm={handleConfirmClose}
+      onCancel={() => setShowExitModal(false)}
+    />
+  </>
   );
 }

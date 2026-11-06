@@ -2,8 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import ExitConfirmationModal from "@/components/ExitConfirmationModal";
 import styles from "./page.module.css";
 import { Icon } from "@iconify/react";
 
@@ -17,6 +19,19 @@ interface LineRow {
 }
 
 export default function CreateSoaReceivedPage() {
+  const router = useRouter();
+  const [showExitModal, setShowExitModal] = useState(false);
+  const [exitTarget, setExitTarget] = useState("/soa-received");
+
+  const handleRequestExit = (targetUrl: string = "/soa-received") => {
+    setExitTarget(targetUrl);
+    setShowExitModal(true);
+  };
+
+  const handleConfirmExit = () => {
+    setShowExitModal(false);
+    router.push(exitTarget);
+  };
   const [vendorCollapsed, setVendorCollapsed] = useState(false);
   const [soaInfoCollapsed, setSoaInfoCollapsed] = useState(false);
   const [attachCollapsed, setAttachCollapsed] = useState(false);
@@ -74,7 +89,16 @@ export default function CreateSoaReceivedPage() {
           {/* Breadcrumb */}
           <div className={styles.breadcrumb}>
             <Icon icon="lucide:home" width={14} />
-            <Link href="/soa-received" className={styles.breadcrumbLink}>SOA Received</Link>
+            <Link
+              href="/soa-received"
+              className={styles.breadcrumbLink}
+              onClick={(e) => {
+                e.preventDefault();
+                handleRequestExit("/soa-received");
+              }}
+            >
+              SOA Received
+            </Link>
             <span>&gt;</span>
             <span className={styles.breadcrumbActive}>Create New</span>
           </div>
@@ -92,9 +116,13 @@ export default function CreateSoaReceivedPage() {
             <div className={styles.actions}>
               <button className={styles.btnSecondary}>Save as Draft</button>
               <button className={styles.btnPrimary}>Save and Continue</button>
-              <Link href="/soa-received" className={styles.btnIconButton} title="Back to SOA Received">
-                <Icon icon="lucide:chevron-left" width={18} />
-              </Link>
+              <button
+                type="button"
+                className={styles.btnSecondary}
+                onClick={() => handleRequestExit("/soa-received")}
+              >
+                Back
+              </button>
             </div>
           </div>
 
@@ -413,6 +441,12 @@ export default function CreateSoaReceivedPage() {
 
         </main>
       </div>
+
+      <ExitConfirmationModal
+        isOpen={showExitModal}
+        onConfirm={handleConfirmExit}
+        onCancel={() => setShowExitModal(false)}
+      />
     </div>
   );
 }

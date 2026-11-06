@@ -13,19 +13,19 @@ import styles from "./page.module.css";
 
 /* ── DATA ───────────────────────────────────────────────── */
 const KPI = [
-  { label: "Total Payable",   value: "SGD 1,627,400.00", change: "+12.5%", up: true,  icon: "lucide:wallet-cards", color: "#E8692A", bg: "#FFF3EE" },
-  { label: "Paid Amount",     value: "SGD 197,613.59",   change: "+8.2%",  up: true,  icon: "lucide:badge-check",  color: "#38A169", bg: "#F0FFF4" },
-  { label: "Pending Amount",  value: "SGD 716,450.77",   change: "+5.4%",  up: false, icon: "lucide:hourglass",    color: "#D69E2E", bg: "#FFFBEB" },
-  { label: "Total Documents", value: "686",              change: "+10.1%", up: true,  icon: "lucide:files",        color: "#6B46C1", bg: "#FAF5FF" },
+  { label: "Total Payable",   value: "SGD 1,627,400.00", change: "+12.5%", up: true,  icon: "lucide:wallet-cards", color: "#E8692A", bg: "#FFF0E8" },
+  { label: "Paid Amount",     value: "SGD 197,613.59",   change: "+8.2%",  up: true,  icon: "lucide:badge-check",  color: "#16A34A", bg: "#DCFCE7" },
+  { label: "Pending Amount",  value: "SGD 716,450.77",   change: "+5.4%",  up: false, icon: "lucide:hourglass",    color: "#E8692A", bg: "#FFF0E8" },
+  { label: "Total Documents", value: "686",              change: "+10.1%", up: true,  icon: "lucide:files",        color: "#16A34A", bg: "#DCFCE7" },
 ];
 
 const DONUT_DATA = [
-  { name: "All",       value: 296, color: "#4A90D9" },
-  { name: "Draft",     value: 46,  color: "#F6AD55" },
-  { name: "Submitted", value: 20,  color: "#68D391" },
-  { name: "Approved",  value: 4,   color: "#48BB78" },
-  { name: "Paid",      value: 22,  color: "#9F7AEA" },
-  { name: "Others",    value: 298, color: "#CBD5E0" },
+  { name: "All",       value: 296, color: "#16A34A" },
+  { name: "Draft",     value: 46,  color: "#22C55E" },
+  { name: "Submitted", value: 20,  color: "#15803D" },
+  { name: "Approved",  value: 4,   color: "#4ADE80" },
+  { name: "Paid",      value: 22,  color: "#86EFAC" },
+  { name: "Pending / Urgent", value: 298, color: "#E8692A" },
 ];
 
 const BAR_DATA = [
@@ -35,10 +35,10 @@ const BAR_DATA = [
   { name: "Rejected",  amount: 41420 },
   { name: "Paid",      amount: 197610 },
   { name: "Cancelled", amount: 28900 },
-  { name: "Others",    amount: 113700 },
+  { name: "Pending",   amount: 113700 },
 ];
 
-const BAR_COLORS = ["#E8692A","#4A90D9","#68D391","#FC8181","#9F7AEA","#F6AD55","#CBD5E0"];
+const BAR_COLORS = ["#16A34A","#16A34A","#16A34A","#E8692A","#16A34A","#16A34A","#E8692A"];
 
 const TREND_DATA = [
   { month: "Dec 23", Payable: 1300000, Paid: 580000, Pending: 720000 },
@@ -50,11 +50,11 @@ const TREND_DATA = [
 ];
 
 const VENDORS = [
-  { name: "Tech Supplies Pte Ltd",  initials: "TS", color: "#4A90D9", amount: "SGD 256,430.00", pct: 15.8 },
+  { name: "Tech Supplies Pte Ltd",  initials: "TS", color: "#E8692A", amount: "SGD 256,430.00", pct: 15.8 },
   { name: "Office Solutions SG",    initials: "OS", color: "#E8692A", amount: "SGD 189,750.00", pct: 11.7 },
-  { name: "Global Services Ltd",    initials: "GS", color: "#38A169", amount: "SGD 143,210.00", pct: 8.8  },
-  { name: "Business World Pte Ltd", initials: "BW", color: "#9F7AEA", amount: "SGD 128,900.00", pct: 7.9  },
-  { name: "Prime Solutions SG",     initials: "PS", color: "#F6AD55", amount: "SGD 110,450.00", pct: 6.8  },
+  { name: "Global Services Ltd",    initials: "GS", color: "#16A34A", amount: "SGD 143,210.00", pct: 8.8  },
+  { name: "Business World Pte Ltd", initials: "BW", color: "#16A34A", amount: "SGD 128,900.00", pct: 7.9  },
+  { name: "Prime Solutions SG",     initials: "PS", color: "#16A34A", amount: "SGD 110,450.00", pct: 6.8  },
 ];
 
 const TABS = ["Bills To Pay", "Purchase Requisition", "Purchase Order", "Claims / Petty Cash"];
@@ -151,7 +151,10 @@ export default function APDashboard() {
           {/* KPI Cards */}
           <div className={styles.kpiGrid}>
             {KPI.map((k) => (
-              <div key={k.label} className={styles.kpiCard}>
+              <div
+                key={k.label}
+                className={styles.kpiCard}
+              >
                 <div className={styles.kpiIconWrap} style={{ background: k.bg }}>
                   <span className={styles.kpiIcon} style={{ color: k.color }}>
                     <DashboardIcon icon={k.icon} size={22} />

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
-import StatusCard from "@/components/StatusCard";
+import StatusSummarySection from "@/components/StatusSummarySection";
 import ImportModal from "@/components/ImportModal";
 import CreateClaimModal, { NewClaimData } from "@/components/CreateClaimModal";
 import ClaimsTable, { ClaimItem } from "@/components/ClaimsTable";
@@ -11,16 +11,16 @@ import styles from "./page.module.css";
 import { Icon } from "@iconify/react";
 
 const CLAIM_STATUS_CARDS = [
-  { id: "my-task", label: "My Task", currency: "SGD", amount: "", count: 0, icon: "lucide:check-square", color: "#0284C7", bgColor: "#E0F2FE" },
-  { id: "history", label: "My History", currency: "SGD", amount: "13,085.18", count: 30, icon: "lucide:history", color: "#475569", bgColor: "#F1F5F9" },
-  { id: "all", label: "All", currency: "SGD", amount: "13,107.18", count: 31, icon: "lucide:list", color: "#E8692A", bgColor: "#FFF0E8" },
-  { id: "draft", label: "Draft", currency: "SGD", amount: "4,873.40", count: 3, icon: "lucide:file-text", color: "#2563EB", bgColor: "#EFF6FF" },
+  { id: "my-task", label: "My Task", currency: "SGD", amount: "", count: 0, icon: "lucide:check-square", color: "#E8692A", bgColor: "#FFF0E8" },
+  { id: "history", label: "My History", currency: "SGD", amount: "13,085.18", count: 30, icon: "lucide:history", color: "#16A34A", bgColor: "#DCFCE7" },
+  { id: "all", label: "All", currency: "SGD", amount: "13,107.18", count: 31, icon: "lucide:list", color: "#16A34A", bgColor: "#DCFCE7" },
+  { id: "draft", label: "Draft", currency: "SGD", amount: "4,873.40", count: 3, icon: "lucide:file-text", color: "#16A34A", bgColor: "#DCFCE7" },
   { id: "submitted", label: "Submitted", currency: "SGD", amount: "50.00", count: 3, icon: "lucide:send", color: "#16A34A", bgColor: "#DCFCE7" },
-  { id: "pending-approval", label: "Pending Approval", currency: "SGD", amount: "266.00", count: 11, icon: "lucide:clock-3", color: "#D97706", bgColor: "#FEF3C7" },
+  { id: "pending-approval", label: "Pending Approval", currency: "SGD", amount: "266.00", count: 11, icon: "lucide:clock-3", color: "#E8692A", bgColor: "#FFF0E8" },
   { id: "approved", label: "Approved", currency: "SGD", amount: "0.00", count: 0, icon: "lucide:check-circle-2", color: "#16A34A", bgColor: "#DCFCE7" },
-  { id: "rejected", label: "Rejected", currency: "SGD", amount: "2,702.00", count: 2, icon: "lucide:x-circle", color: "#DC2626", bgColor: "#FEE2E2" },
-  { id: "cancelled", label: "Cancelled", currency: "SGD", amount: "10.00", count: 1, icon: "lucide:ban", color: "#EA580C", bgColor: "#FFEDD5" },
-  { id: "paid", label: "Paid", currency: "SGD", amount: "100.00", count: 5, icon: "lucide:wallet", color: "#059669", bgColor: "#D1FAE5" },
+  { id: "rejected", label: "Rejected", currency: "SGD", amount: "2,702.00", count: 2, icon: "lucide:x-circle", color: "#E8692A", bgColor: "#FFF0E8" },
+  { id: "cancelled", label: "Cancelled", currency: "SGD", amount: "10.00", count: 1, icon: "lucide:ban", color: "#16A34A", bgColor: "#DCFCE7" },
+  { id: "paid", label: "Paid", currency: "SGD", amount: "100.00", count: 5, icon: "lucide:wallet", color: "#16A34A", bgColor: "#DCFCE7" },
   { id: "awaiting-payment", label: "Awaiting Payment", currency: "SGD", amount: "283.00", count: 7, icon: "lucide:hourglass", color: "#E8692A", bgColor: "#FFF0E8" },
 ];
 
@@ -231,24 +231,13 @@ export default function ClaimsPage() {
             onSubmitClaim={handleCreateSubmit}
           />
 
-          {/* Metric Status Cards Grid */}
-          <div className={styles.cardsGrid}>
-            {CLAIM_STATUS_CARDS.map((card) => (
-              <StatusCard
-                key={card.id}
-                id={card.id}
-                label={card.label}
-                currency={card.currency}
-                amount={card.amount}
-                count={card.count}
-                color={card.color}
-                bgColor={card.bgColor}
-                active={activeCard === card.id}
-                onClick={() => setActiveCard(card.id)}
-                icon={card.icon}
-              />
-            ))}
-          </div>
+          {/* Metric Status Cards / Listing Toggle */}
+          <StatusSummarySection
+            cards={CLAIM_STATUS_CARDS}
+            activeId={activeCard}
+            onSelect={(card) => setActiveCard(card.id)}
+            gridClassName={styles.cardsGrid}
+          />
 
           {/* Claims Data Table */}
           <ClaimsTable claims={claimsList} activeFilter={activeCard} />

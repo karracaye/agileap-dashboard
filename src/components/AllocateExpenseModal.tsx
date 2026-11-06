@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./AllocateExpenseModal.module.css";
 import { Icon } from "@iconify/react";
+import ExitConfirmationModal from "./ExitConfirmationModal";
 
 export type AllocationMode = "Manual" | "Rule based" | "Two-level";
 
@@ -58,10 +59,21 @@ export default function AllocateExpenseModal({
   lineItem,
   onSaveAllocation,
 }: AllocateExpenseModalProps) {
+  const [showExitModal, setShowExitModal] = useState(false);
+
   const initialMode: AllocationMode =
     lineItem?.allocationType === "Not split"
       ? "Manual"
       : lineItem?.allocationType || "Manual";
+
+  const handleAttemptClose = () => {
+    setShowExitModal(true);
+  };
+
+  const handleConfirmClose = () => {
+    setShowExitModal(false);
+    onClose();
+  };
 
   const [mode, setMode] = useState<AllocationMode>(initialMode);
   const [splitBy, setSplitBy] = useState<"Percentage" | "Amount">("Percentage");
@@ -227,20 +239,21 @@ export default function AllocateExpenseModal({
   };
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
-        {/* Modal Header */}
-        <div className={styles.modalHeader}>
-          <div className={styles.titleGroup}>
-            <h2 className={styles.modalTitle}>Allocate Expense</h2>
-            <span className={styles.modalSub}>
-              Line {lineItem.no} · {lineItem.type} · {lineItem.company} · {lineItem.transDate}
-            </span>
+    <>
+      <div className={styles.overlay} onClick={handleAttemptClose}>
+        <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
+          {/* Modal Header */}
+          <div className={styles.modalHeader}>
+            <div className={styles.titleGroup}>
+              <h2 className={styles.modalTitle}>Allocate Expense</h2>
+              <span className={styles.modalSub}>
+                Line {lineItem.no} · {lineItem.type} · {lineItem.company} · {lineItem.transDate}
+              </span>
+            </div>
+            <button className={styles.btnClose} onClick={handleAttemptClose} aria-label="Close modal">
+              <Icon icon="lucide:x" width={18} />
+            </button>
           </div>
-          <button className={styles.btnClose} onClick={onClose} aria-label="Close modal">
-            <Icon icon="lucide:x" width={18} />
-          </button>
-        </div>
 
         {/* Modal Body Container (Scrollable) */}
         <div className={styles.modalBody}>
@@ -950,7 +963,7 @@ export default function AllocateExpenseModal({
 
         {/* Modal Footer (Sticky Bottom with Pill Buttons) */}
         <div className={styles.modalFooter}>
-          <button type="button" className={styles.btnCancel} onClick={onClose}>
+          <button type="button" className={styles.btnCancel} onClick={handleAttemptClose}>
             Cancel
           </button>
           <button type="button" className={styles.btnSubmit} onClick={handleSave}>
@@ -959,5 +972,12 @@ export default function AllocateExpenseModal({
         </div>
       </div>
     </div>
+
+    <ExitConfirmationModal
+      isOpen={showExitModal}
+      onConfirm={handleConfirmClose}
+      onCancel={() => setShowExitModal(false)}
+    />
+  </>
   );
 }

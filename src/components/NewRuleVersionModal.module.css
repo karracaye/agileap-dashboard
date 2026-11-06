@@ -55,7 +55,7 @@
 
 .modalTitle {
   font-size: 19px;
-  font-weight: 700;
+  font-weight: 600;
   color: #0F172A;
   letter-spacing: -0.3px;
 }
@@ -85,11 +85,19 @@
   color: #0F172A;
 }
 
-.modalBody {
-  padding: 16px 22px;
+.modalForm {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.modalBody {
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   flex: 1;
   min-height: 0;
   overflow-y: auto;
@@ -152,7 +160,7 @@
 /* Allocation Table Section */
 .sectionTitle {
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   color: #0F172A;
   margin-top: 4px;
 }
@@ -236,7 +244,7 @@
   align-items: center;
   gap: 6px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   color: #E8692A;
   background: transparent;
   border: none;
@@ -304,6 +312,7 @@
   justify-content: flex-end;
   gap: 12px;
   background: #F8FAFC;
+  flex-shrink: 0;
 }
 
 .btnCancel {
